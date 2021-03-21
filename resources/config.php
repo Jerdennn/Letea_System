@@ -1,11 +1,14 @@
 <?php 
-define('db_host','localhost');
-define('db_username','root');
-define('db_password','');
-define('db_name','db_letea');
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_NAME', 'db_letea');
 
-$connection = mysqli_connect('db_host','db_username','db_password','db_name');
-
-if(!$connection){
-    die('Could not Connect to MySQL Database' . mysqli_error_() );
+/* Attempt to connect to MySQL database */
+$db = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+ 
+// Check connection
+if(!$db){
+    die("ERROR: Could not connect. " . mysqli_connect_error());
 }
+?>
