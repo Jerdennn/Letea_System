@@ -123,7 +123,7 @@ $finalcode='RS-'.createRandomPassword();
 <div class="sidebar">
     <ul class="sidebar-nav">
         <li class="sidebar-nav-item">
-            <a href="../sales_clerk/sales_dashboard.php" class="sidebar-nav-link">
+            <a href="../templates/dashboard.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-tachometer-alt"></i>
                 </div>
@@ -133,7 +133,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_product.php" class="sidebar-nav-link">
+            <a href="../templates/products.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-clipboard-list"></i>
                 </div>
@@ -190,7 +190,7 @@ $finalcode='RS-'.createRandomPassword();
 <div class="sidebar">
     <ul class="sidebar-nav">
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_dashboard.php" class="sidebar-nav-link">
+            <a href="../templates/dashboard.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-tachometer-alt"></i>
                 </div>
@@ -200,7 +200,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_product.php" class="sidebar-nav-link">
+            <a href="../templates/products.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-clipboard-list"></i>
                 </div>

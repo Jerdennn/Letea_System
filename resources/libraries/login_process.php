@@ -55,7 +55,7 @@ if ($upass == ''){
              ?>    <script type="text/javascript">
                       //then it will be redirected to index.php
                       alert("<?php echo  $_SESSION['FIRSTNAME']; ?> Welcome!");
-                      window.location = "../sales_clerk/sales_dashboard.php";
+                      window.location = "../templates/dashboard.php";
                   </script>
              <?php        
            
@@ -65,7 +65,7 @@ if ($upass == ''){
              ?>    <script type="text/javascript">
                       //then it will be redirected to index.php
                       alert("<?php echo  $_SESSION['FIRSTNAME']; ?> Welcome!");
-                      window.location = "../inv_clerk/inv_dashboard.php";
+                      window.location = "../templates/dashboard.php";
                   </script>
              <?php        
            
@@ -75,7 +75,7 @@ if ($upass == ''){
               ?>
                 <script type="text/javascript">
                 alert("Username or Password Not Registered! Contact Your administrator.");
-                window.location = "../login.php";
+                window.location = "../../index.php";
                 </script>
               <?php
 
