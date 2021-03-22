@@ -88,7 +88,7 @@ require_once '../session.php';
 					<img src="../../public_html/img/user.png" alt="user.jpg" class="dropdown-toggle" data-toggle="user-menu">
 					<ul id="user-menu" class="dropdown-menu">
 						<li  class="dropdown-menu-item">
-							<a class="dropdown-menu-link" href="../admin_forms/profile.php">
+							<a class="dropdown-menu-link" href="../templates/profile.php">
 								<div>
 									<i class="fas fa-user-edit"></i>
 								</div>

@@ -1,8 +1,6 @@
 <?php require_once '../require/navbar.php'; ?>
 <?php require_once '../require/sidebar.php'; ?>
-
-
-$sql = "SELECT DISTINCT category_name, CATEGORY_ID FROM category order by category_name asc";
+<?php $sql = "SELECT DISTINCT category_name, CATEGORY_ID FROM category order by category_name asc";
 $result = mysqli_query($db, $sql) or die ("Bad SQL: $sql");
 $opt = "<select name='category'>
 <option disabled selected>CATEGORY</option>";
@@ -66,7 +64,7 @@ $sup .= "</select>";
 				echo '<tr>';
 				}
 			?>
-                                <td><img style="width:80px;height:60px" src="../../public_html/img/dist/<?php echo $row['p_pic'];?>"></td>
+                                <td><img style="width:80px;height:60px" src=" ../../../../public_html/img/dist/uploads/<?php echo $row['p_pic'];?>"></td>
                                 <td><?php echo $row['p_code'];?></td>
                                 <td><?php echo $row['p_name'];?></td>
                                 <td><?php echo $row['p_descrp'];?></td>
@@ -152,4 +150,6 @@ $sup .= "</select>";
         </div>
     </div>
 </div>
+
+
 <?php require_once '../require/footer.php';?>

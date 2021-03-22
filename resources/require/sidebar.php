@@ -42,7 +42,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_product.php" class="sidebar-nav-link">
+            <a href="../templates/products.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-clipboard-list"></i>
                 </div>
@@ -50,7 +50,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/report.php?from=0&to=0" class="sidebar-nav-link">
+            <a href="../templates/report.php?from=0&to=0" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-chart-area"></i>
                 </div>
@@ -58,7 +58,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_transaction.php?id=CASH&invoice=<?php echo $finalcode?>" class="sidebar-nav-link">
+            <a href="../templates/transaction.php?id=CASH&invoice=<?php echo $finalcode?>" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-file-invoice-dollar"></i>
                 </div>
@@ -66,7 +66,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_employee.php" class="sidebar-nav-link">
+            <a href="../templates/employee.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-users"></i>
                 </div>
@@ -74,7 +74,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_supplier.php" class="sidebar-nav-link">
+            <a href="../templates/supplier.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-dolly"></i>
                 </div>
@@ -82,7 +82,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_users.php" class="sidebar-nav-link">
+            <a href="../templates/users.php" class="sidebar-nav-link">
                 <div>
                     <i class="far fa-user-circle"></i>
                 </div>
@@ -90,7 +90,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_customer.php" class="sidebar-nav-link">
+            <a href="../templates/customer.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-user"></i>
                 </div>
@@ -98,7 +98,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_category.php" class="sidebar-nav-link">
+            <a href="../templates/category.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-list-alt"></i>
                 </div>
@@ -106,7 +106,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_audit.php" class="sidebar-nav-link">
+            <a href="../templates/audit.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-history"></i>
                 </div>
@@ -141,7 +141,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/report.php?from=0&to=0" class="sidebar-nav-link">
+            <a href="../templates/report.php?from=0&to=0" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-chart-area"></i>
                 </div>
@@ -149,7 +149,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_transaction.php?id=CASH&invoice=<?php echo $finalcode?>" class="sidebar-nav-link">
+            <a href="../templates/transaction.php?id=CASH&invoice=<?php echo $finalcode?>" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-file-invoice-dollar"></i>
                 </div>
@@ -157,7 +157,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_supplier.php" class="sidebar-nav-link">
+            <a href="../templates/supplier.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-dolly"></i>
                 </div>
@@ -165,7 +165,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_customer.php" class="sidebar-nav-link">
+            <a href="../templates/customer.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-user"></i>
                 </div>
@@ -173,7 +173,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_category.php" class="sidebar-nav-link">
+            <a href="../templates/category.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-list-alt"></i>
                 </div>
@@ -208,7 +208,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_supplier.php" class="sidebar-nav-link">
+            <a href="../templates/supplier.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-dolly"></i>
                 </div>
@@ -216,7 +216,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../admin_forms/admin_category.php" class="sidebar-nav-link">
+            <a href="../templates/category.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-list-alt"></i>
                 </div>
