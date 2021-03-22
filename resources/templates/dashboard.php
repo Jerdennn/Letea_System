@@ -4,14 +4,29 @@
 <!-- main content -->
 	<div class="wrapper">
 		<div class="row">
-			<div class="col-3 col-m-5 col-sm-6">
+			<div class="col-2 col-m-5 col-sm-6">
 				<div class="counter bg-primary">
 					<p>
 						<i class="fas fa-tasks"></i>
 					</p>
-					<h3>PRODUCTS</h3>
+					<h3>INGREDIENT</h3>
 					<p><?php
                         $query = "SELECT COUNT(*) FROM product";
+                        $result = mysqli_query($db, $query) or die(mysqli_error($db));
+                        while ($row = mysqli_fetch_array($result)) {
+                            echo "$row[0]";
+                          }
+                    ?> Record(s) </p>
+				</div>
+			</div>
+            <div class="col-2 col-m-5 col-sm-6">
+				<div class="counter bg-primary">
+					<p>
+						<i class="fas fa-tasks"></i>
+					</p>
+					<h3>BRANCH</h3>
+					<p><?php
+                        $query = "SELECT COUNT(*) FROM branch";
                         $result = mysqli_query($db, $query) or die(mysqli_error($db));
                         while ($row = mysqli_fetch_array($result)) {
                             echo "$row[0]";
@@ -34,7 +49,7 @@
                     ?> Record(s) </p>
 				</div>
 			</div>
-			<div class="col-3 col-m-5 col-sm-6">
+			<div class="col-2 col-m-5 col-sm-6">
 				<div class="counter bg-success">
 					<p>
 						<i class="fas fa-check-circle"></i>
@@ -49,7 +64,7 @@
                     ?> Record(s) </p>
 				</div>
 			</div>
-			<div class="col-3 col-m-5 col-sm-6">
+			<div class="col-2 col-m-5 col-sm-6">
 				<div class="counter bg-danger">
 					<p>
 						<i class="fas fa-bug"></i>

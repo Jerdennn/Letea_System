@@ -82,7 +82,7 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../templates/users.php" class="sidebar-nav-link">
+            <a href="../templates/user.php" class="sidebar-nav-link">
                 <div>
                     <i class="far fa-user-circle"></i>
                 </div>

@@ -15,9 +15,9 @@ require_once '../session.php';
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <!-- End import lib -->
     <link rel="stylesheet" type="text/css" href="../../public_html/css/dashboard.css">
-    <link rel="stylesheet" type="text/css" href="public_html/css/modal.css">
-</head>
+	<link rel="stylesheet" type="text/css" href="../../public_html/css/modalStyle.css">
 
+</head>
 <body class="overlay-scrollbar">
 	<!-- navbar -->
 	<div class="navbar">
