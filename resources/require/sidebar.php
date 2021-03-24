@@ -74,14 +74,6 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../templates/supplier.php" class="sidebar-nav-link">
-                <div>
-                    <i class="fas fa-dolly"></i>
-                </div>
-                <span>Supplier</span>
-            </a>
-        </li>
-        <li class="sidebar-nav-item">
             <a href="../templates/user.php" class="sidebar-nav-link">
                 <div>
                     <i class="far fa-user-circle"></i>
@@ -111,6 +103,22 @@ $finalcode='RS-'.createRandomPassword();
                     <i class="fas fa-history"></i>
                 </div>
                 <span>Audit Trail</span>
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="../templates/branch.php" class="sidebar-nav-link">
+                <div>
+                <i class="fas fa-store"></i>
+                </div>
+                <span>Merchant</span>
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="../templates/uom.php" class="sidebar-nav-link">
+                <div>
+                <i class="fas fa-weight"></i>
+                </div>
+                <span>Unit of Measurement</span>
             </a>
         </li>
     </ul>
@@ -157,14 +165,6 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../templates/supplier.php" class="sidebar-nav-link">
-                <div>
-                    <i class="fas fa-dolly"></i>
-                </div>
-                <span>Supplier</span>
-            </a>
-        </li>
-        <li class="sidebar-nav-item">
             <a href="../templates/customer.php" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-user"></i>
@@ -178,6 +178,22 @@ $finalcode='RS-'.createRandomPassword();
                     <i class="fas fa-list-alt"></i>
                 </div>
                 <span>Category</span>
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="../templates/category.php" class="sidebar-nav-link">
+                <div>
+                    <i class="fas fa-list-alt"></i>
+                </div>
+                <span>Merchant</span>
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="../templates/category.php" class="sidebar-nav-link">
+                <div>
+                    <i class="fas fa-list-alt"></i>
+                </div>
+                <span>Unit of Measurement</span>
             </a>
         </li>
     </ul>
@@ -208,11 +224,11 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../templates/supplier.php" class="sidebar-nav-link">
+            <a href="../templates/category.php" class="sidebar-nav-link">
                 <div>
-                    <i class="fas fa-dolly"></i>
+                    <i class="fas fa-list-alt"></i>
                 </div>
-                <span>Supplier</span>
+                <span>Category</span>
             </a>
         </li>
         <li class="sidebar-nav-item">
@@ -220,7 +236,15 @@ $finalcode='RS-'.createRandomPassword();
                 <div>
                     <i class="fas fa-list-alt"></i>
                 </div>
-                <span>Category</span>
+                <span>Merchant</span>
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="../templates/category.php" class="sidebar-nav-link">
+                <div>
+                    <i class="fas fa-list-alt"></i>
+                </div>
+                <span>Unit of Measurement</span>
             </a>
         </li>
     </ul>

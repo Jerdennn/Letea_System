@@ -4,7 +4,7 @@
     <div class="row">
         <div class="header">
             <h3 style="text-transform:uppercase;">
-                &nbsp; &nbsp; Category &nbsp;
+                &nbsp; &nbsp; Measurement &nbsp;
                 <a class="js-open-modal" href="#" data-modal-id="addCategory"><i class="fas fa-plus"></i></a>
             </h3>
         </div>
@@ -12,7 +12,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3 style="text-transform:uppercase;">
-                        Category Table
+                        <center> Ingredient Measurement Table </center>
                     </h3>
                 </div>
                 <div class="card-content">
@@ -52,21 +52,43 @@
         </div>
     </div>
 </div>
-<!-- ADD CATEGORY MODAL -->
+<!-- ADD MEASUREMENT MODAL -->
 <div id="addCategory" class="modal-box">
     <header>
         <a href="#" class="js-modal-close close">×</a>
-        <h5>ADD CATEGORY</h5>
+        <h5>ADD MEASUREMENT</h5>
     </header>
     <div class="modal-body">
         <div class="form-style-2">
             <form action="" method="post">
-                <label for="field1">
-                    <span>Category Name<span class="required">*</span></span>
-                    <input type="text" class="input-field" name="field1" value="" />
+
+                <label for="field1"><span>Ingredients</span>
+                    <select name="field4" class="select-field">
+                    <option readonly> Select Ingredients </option>
+                <?php 
+                    $query = "SELECT * FROM PRODUCT inner join category on category.category_id = product.cat_id ORDER BY P_ID ASC";
+                    $result = mysqli_query($db, $query) or die ("Bad SQL Query: $query");
+                   foreach($result as $data): ?>
+                        <option value="<?php echo $data['p_id']?>""> <?php echo $data['p_name']?> - <?php echo $data['category_name']?> - <?php echo "QTY ".$data['p_qty']?></option>
+                    <?php endforeach; ?>
+                </select>
                 </label>
-                <label for="field5"><span>Description</span>
-                    <textarea name="field5" class="textarea-field"></textarea>
+                            
+                <label for="field2">
+                    <span>Select Unit<span class="required"></span></span>
+                    <select name="field4" class="select-field">
+                        <option readonly>---</option>
+                        <option value="milliliter"> ML </option>
+                        <option value="teaspoon"> TSP </option>
+                        <option value="tablespoon"> TBSP </option>
+                        <option value="fluidounce"> FL OZ </option>
+                        <option value="cup"> CUP </option>
+                        <option value="liter"> L </option>
+                        <option value="gram"> GR </option>
+                        <option value="ounce"> OZ </option>
+                        <option value="pound"> LB </option>
+                        <option value="kilogram"> KG </option>
+                    </select>
                 </label>
                 <label>
                     <span></span>
@@ -150,7 +172,7 @@
 
     .form-style-2 input.input-field,
     .form-style-2 .select-field {
-        width: 50%;
+        width: 60%;
     }
 
     .form-style-2 input.input-field,

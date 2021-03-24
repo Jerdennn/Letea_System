@@ -47,7 +47,6 @@ $sup .= "</select>";
                                 <th>Qty</th>
                                 <th>Price</th>
                                 <th>Category</th>
-
                                 <th>Total</th>
                                 <th>Action</th>
                             </tr>
@@ -97,11 +96,11 @@ $sup .= "</select>";
         <h5>ADD INGREDIENT</h5>
     </header>
     <div class="modal-body">
-        <div class="form-style-2">
+        <div class="form-style-2" >
             <form action="" method="post">
-                <label for="field1">
+                <label for="barcode">
                     <span>Barcode<span class="required">*</span></span>
-                    <input type="text" class="input-field" name="field1" value="" />
+                    <input type="text" class="input-field" name="barcode" value="" maxlength="80" autofocus id="itemCode">
                 </label>
 
                 <label for="field2"><span>Ingredient Name<span class="required">*</span></span>
@@ -125,19 +124,14 @@ $sup .= "</select>";
                     <select name="field4" class="select-field"></select>
                 </label>
 
-                <label for="field4">
+                <!-- <label for="field4">
                     <span>Supplier</span>
                     <select name="field4" class="select-field"></select>
-                </label>
+                </label> -->
 
                 <label for="date">
                     <span>Date Stock in</span>
                     <input type="Date" name="date" />
-                </label>
-
-                <label for="expiry">
-                    <span>Expiry Date</span>
-                    <input type="Date" name="expiry" />
                 </label>
 
                 <label for="image">
@@ -171,7 +165,7 @@ $sup .= "</select>";
                 </label>
 
                 <label for="field2"><span>Ingredient Name<span class="required"></span></span>
-                    <input type="text" class="input-field" name="field2" value="" />
+                    <input type="text" class="input-field" id="itemName" name="field2" value="" />
                 </label>
 
                 <label for="field5"><span>Description</span>
@@ -349,5 +343,21 @@ $sup .= "</select>";
 
         $(window).resize();
 
+    });
+
+
+    $("#useBarcodeScanner").click(function(e){
+        e.preventDefault();
+        
+        $("#itemCode").focus();
+    });
+
+    $("#itemCode").keypress(function(e){
+        if(e.which === 13){
+            e.preventDefault();
+            
+            //change to next input by triggering the tab keyboard
+            $("#itemName").focus();
+        }
     });
 </script>
