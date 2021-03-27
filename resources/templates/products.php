@@ -63,8 +63,8 @@
                                 <td><?php echo $data['created_at'];?></td>
                                 <td><?php echo number_format($data['total']);?></td>
                                 <td>
-                                <button data-toggle="modal" data-target="#editProduct<?php echo $data['item_id']?>" type="button" class="btn btn-primary bg-gradient-primary"><i class="fas fa-pen fa-l"></i></button>
-                                <button href="admin_category.php?cat_del=<?php echo $data['item_id']?>" class="btn btn-danger"><i class="fas fa-trash fa-l"></i></button>
+                                <button data-toggle="modal" data-target="#editProduct<?php echo $data['item_id']?>" type="button" class="btn btn-primary bg-gradient-primary"><i class="fas fa-pen fa-m"> Edit</i></button>
+                                <button href="admin_category.php?cat_del=<?php echo $data['item_id']?>" class="btn btn-danger"><i class="fas fa-trash fa-m"> Delete</i></button>
                                 </td>
                             </tr>
 <!-- EDIT MODAL FOR ITEMS -->
@@ -119,8 +119,7 @@
           <div class="modal-footer">
           <h6>Le'tea Milktea Hub &copy; 2019</h6>
             <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary" type="submit" name="btn_save">Save</button>
-            <button type="reset" class="btn btn-danger"><i class="fa fa-times fa-fw"></i>Reset</button>
+            <button class="btn btn-primary" type="submit" name="btn_save">Update</button>
          </div>
          </form>  
         </div>
@@ -150,13 +149,13 @@
         <div class="modal-body">
           <form method="post" action="../libraries/addProduct.php" class="form-horizontal">
           <div class="form-group">
-             <input type="hidden" class="form-control"  readonly readonly>
+             <input type="hidden" class="form-control" readonly>
            </div>
            <div class="form-group">
-           <input type="text" placeholder="Barcode" name="barcode" class="form-control" />
+           <input type="text" placeholder="Barcode" name="barcode" class="form-control" required/>
            </div>
            <div class="form-group">
-           <input type="text" name="item_name" class="form-control" placeholder="Item name" />
+           <input type="text" name="item_name" class="form-control" placeholder="Item name" required/>
            </div>
            <div class="form-group">
              <textarea rows="5" cols="50" class="form-control" placeholder="Description" name="description" required></textarea>

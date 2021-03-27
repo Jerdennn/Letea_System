@@ -7,7 +7,7 @@
 			<div class="col-3 col-m-3 col-sm-2">
 				<div class="counter bg-primary">
 					<p>
-						<i class="fas fa-tasks fa-2x"></i>
+						<i class="fas fa-utensils fa-2x"></i>
 					</p>
 					<h3>INGREDIENT</h3>
 					<p><?php

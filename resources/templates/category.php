@@ -10,7 +10,7 @@
         <div class="header">
             <h3 style="text-transform:uppercase;">
                 &nbsp; &nbsp; Category &nbsp;
-                <a href="#" data-toggle="modal" data-target="#addModal" type="button" class="btn btn-primary bg-gradient-primary"><i class="fas fa-plus"></i></a>
+                <a href="#" data-toggle="modal" data-target="#addModal" type="button" class="btn btn-primary bg-gradient-primary"><i class="fas fa-plus"> CATEGORIES</i></a>
             </h3>
         </div>
         <div class="col-20 col-m-12 col-sm-12">
@@ -24,6 +24,7 @@
                     <table>
                         <thead>
                             <tr>
+                            <th style="text-align:left;">ID </th>
                                 <th style="text-align:left;">Category Name</th>
                                 <th style="text-align:left;">Description</th>
                                 <th style="text-align:left;">Status</th>
@@ -31,26 +32,31 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-        $query ='select * from category';
-        $result = mysqli_query($db, $query) or die (mysqli_error($db)); ?>
-
-                            <?php    while ($cat_row = mysqli_fetch_array($result)) {?>
-
+                        <?php $query ="SELECT * FROM CATEGORY WHERE STATUS = 0 ORDER BY CATEGORY_ID ASC";
+                        $result = mysqli_query($db, $query) or die (mysqli_error($db)); ?>
+                        <?php foreach($result as $data):?>
+                       
                             <tr>
-                                <td><?php echo $cat_row['category_name']?></td>
-                                <td><?php echo $cat_row['description']?></td>
-                                <td><?php echo $cat_row['status']?></td>
+                                <td><?php echo $data['category_id']?></td>
+                                <td><?php echo $data['category_name']?></td>
+                                <td><?php echo $data['description']?></td>
+                                <td><?php $status = $data['status'];
+                        if ($status == 0):
+                          echo "Available";
+                        else:
+                          echo "Unavailable";
+                        endif;
+                        ?></td>
                                 <td>
-                                    <button data-toggle="modal" data-target="#editModal" type="button" class="btn btn-primary bg-gradient-primary"><i class="fas fa-pen fa-l"></i></button>
-                                    <button href="admin_category.php?cat_del=<?php echo $cat_row['category_id']?>" class="btn btn-danger"><i class="fas fa-trash fa-l"></i></button>
+                                    <button data-toggle="modal" data-target="#editModal<?php echo $data['category_id']?>" type="button" class="btn btn-primary bg-gradient-primary"><i class="fas fa-pen fa-m"> EDIT</i></button>
+                                    <button href="admin_category.php?cat_del=<?php echo $data['category_id']?>" class="btn btn-danger"><i class="fas fa-trash fa-m"> DELETE</i></button>
                                 </td>
 <!-- EDIT MODAL CATEGORY -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="editModal<?php echo $data['category_id']?>" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
@@ -58,16 +64,16 @@
         <div class="modal-body">
           <form method="post" action="">
           <div class="form-group">
-             <input type="text" class="form-control" value="<?php echo $cat_row['category_id']?>" readonly>
+             <input type="text" class="form-control" value="<?php echo $data['category_id']?>" readonly>
            </div>
            <div class="form-group">
-             <input class="form-control" placeholder="Category name" name="category_name" required value="<?php echo $cat_row['category_name']?>">
+             <input class="form-control" placeholder="Category name" name="category_name" required value="<?php echo $data['category_name']?>">
            </div>
            <div class="form-group">
-             <textarea rows="5" cols="50" class="form-control" placeholder="Description" name="description" required><?php echo $cat_row['description']?></textarea>
+             <textarea rows="5" cols="50" class="form-control" placeholder="Description" name="description" required><?php echo $data['description']?></textarea>
            </div>
            <div class="form-group">
-           <select name="status" class="form-control" value="<?php echo $cat_row['status']?>">
+           <select name="status" class="form-control" value="<?php echo $data['status']?>">
            <option readonly>Select Category Status</option>
            <option value=0>Enabled</option>
            <option value=1>Disabled</option>
@@ -76,8 +82,7 @@
           <div class="modal-footer">
           <h6>Le'tea Milktea Hub &copy; 2019</h6>
             <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary" type="submit" name="btn_save">Save</button>
-            <button type="reset" class="btn btn-danger"><i class="fa fa-times fa-fw"></i>Reset</button>
+            <button class="btn btn-primary" type="submit" name="btn_save">Update</button>
          </div>
          </form>  
         </div>
@@ -85,7 +90,7 @@
     </div>
   </div>
                             </tr>
-                            <?php    } ?>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -106,7 +111,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form method="post" action="">
+          <form method="post" action="../libraries/addCategory.php">
            <div class="form-group">
              <input class="form-control" placeholder="Category name" name="category_name" required>
            </div>
@@ -116,14 +121,14 @@
            <div class="form-group">
            <select name="status" class="form-control">
            <option readonly>Select Category Status</option>
-           <option value=0>Enabled</option>
-           <option value=1>Disabled</option>
+           <option value=0>Available</option>
+           <option value=1>Unavailable</option>
            </select>
            </div>
           <div class="modal-footer">
           <h6>Le'tea Milktea Hub &copy; 2019</h6>
             <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary" type="submit" name="btn_save">Save</button>
+            <button class="btn btn-primary" type="submit" name="save_category">Save</button>
             <button type="reset" class="btn btn-danger"><i class="fa fa-times fa-fw"></i>Reset</button>
          </div>
          </form>  
