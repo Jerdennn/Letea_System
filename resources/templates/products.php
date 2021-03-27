@@ -1,28 +1,12 @@
 <?php require_once '../require/navbar.php'; ?>
 <?php require_once '../require/sidebar.php'; ?>
-<?php $sql = "SELECT DISTINCT category_name, CATEGORY_ID FROM category order by category_name asc";
-$result = mysqli_query($db, $sql) or die ("Bad SQL: $sql");
-$opt = "<select name='category'>
-<option disabled selected>CATEGORY</option>";
-while ($row = mysqli_fetch_assoc($result)) {
-    $opt .= "<option value='".$row['CATEGORY_ID']."'>".$row['category_name']."</option>";
-}
-$opt .= "</select>";
-
-$sql2 = "SELECT DISTINCT SUPPLIER_ID, supplier_name FROM supplier order by supplier_name asc";
-$result2 = mysqli_query($db, $sql2) or die ("Bad SQL: $sql2");
-$sup = "<select name='supplier'> <option disabled selected>SUPPLIER</option>";
-while ($row = mysqli_fetch_assoc($result2)) {
-    $sup .= "<option value='".$row['SUPPLIER_ID']."'>".$row['supplier_name']."</option>";
-}
-$sup .= "</select>";
-?>
 <div class="wrapper">
     <div class="row">
         <div class="header">
             <h3 style="text-transform:uppercase;">
                 &nbsp; &nbsp; Ingredient &nbsp;
-                <a class="js-open-modal" href="#" data-modal-id="popup"><i class="fas fa-plus"></i></a>
+        <a href="#addItem" class="btn btn-primary" data-toggle="modal" data-target="#addItem"><i class="fas fa-plus"></i> Item</a>
+        <a href="#addStock" class="btn btn-primary" data-toggle="modal" data-target="#addStock"><i class="fas fa-plus"></i> Stock</a>
             </h3>
         </div>
         <div class="col-20 col-m-12 col-sm-12">
@@ -33,29 +17,32 @@ $sup .= "</select>";
                     </h3>
                 </div>
                 <div class="card-content">
-                    <?php $query=mysqli_query($db,"SELECT *, p_price * p_qty as total FROM product INNER JOIN category ON category.category_ID = product.cat_ID INNER JOIN supplier ON supplier.supplier_ID = product.supplier_ID ORDER BY p_name" )or die(mysqli_error($db));
+                    <?php 
+                    $query = "SELECT *, price * qty as total FROM item INNER JOIN category ON category.category_ID = item.category_ID ORDER BY item_id ASC LIMIT 10";
+                    $result = mysqli_query($db,$query)or die(mysqli_error($db));
                     ?>
                     <table>
                         <thead>
                             <tr>
-
+                                <th>ID</th>
                                 <th>Picture</th>
-                                <th>Product Code</th>
-                                <th>Product Name</th>
+                                <th>SKU</th>
+                                <th>Name</th>
                                 <th>Description</th>
-                                <th>Supplier</th>
+                                <th>Category</th>
                                 <th>Qty</th>
                                 <th>Price</th>
-                                <th>Category</th>
+                                <th>Date</th>
                                 <th>Total</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while($row=mysqli_fetch_array($query)){ ?>
+                            <?php 
+                            foreach($result as $data): ?>
                             <tr>
                                 <?php 
-                               $availableqty=$row['p_qty'];
+                               $availableqty = $data['qty'];
 				if ($availableqty < 15) {
 				echo '<tr style="color: #fff; background:rgb(255, 95, 66);">';
 				}
@@ -63,25 +50,84 @@ $sup .= "</select>";
 				echo '<tr>';
 				}
 			?>
+                                <td><?php echo $data['item_id'];?></td>
                                 <td><img style="width:80px;height:60px"
-                                        src=" ../../../../public_html/img/dist/uploads/<?php echo $row['p_pic'];?>">
+                                        src=" ../../../../public_html/img/dist/uploads<?php echo $data['item_image'];?>">
                                 </td>
-                                <td><?php echo $row['p_code'];?></td>
-                                <td><?php echo $row['p_name'];?></td>
-                                <td><?php echo $row['p_descrp'];?></td>
-                                <td><?php echo $row['supplier_name'];?></td>
-                                <td><?php echo $row['p_qty'];?></td>
-                                <td><?php echo $row['p_price'];?></td>
-                                <td><?php echo $row['category_name'];?></td>
-                                <td><?php echo number_format($row['total']);?></td>
+                                <td><?php echo $data['SKU'];?></td>
+                                <td><?php echo $data['item_name'];?></td>
+                                <td><?php echo $data['description'];?></td>
+                                <td><?php echo $data['qty'];?></td>
+                                <td><?php echo $data['price'];?></td>
+                                <td><?php echo $data['category_name'];?></td>
+                                <td><?php echo $data['created_at'];?></td>
+                                <td><?php echo number_format($data['total']);?></td>
                                 <td>
-                                    <a href="products.php?pro=<?php echo $row['p_id']; ?>" class="js-open-modal"
-                                        data-modal-id="popup2"><i class="fas fa-pen fa-l"></i></a>
-                                    <a href="admin_product.php?pro_del=<?php echo $row['p_id']; ?>"><i
-                                            class="fas fa-trash fa-l"></i></a>
+                                <button data-toggle="modal" data-target="#editProduct<?php echo $data['item_id']?>" type="button" class="btn btn-primary bg-gradient-primary"><i class="fas fa-pen fa-l"></i></button>
+                                <button href="admin_category.php?cat_del=<?php echo $data['item_id']?>" class="btn btn-danger"><i class="fas fa-trash fa-l"></i></button>
                                 </td>
                             </tr>
-                            <?php } ?>
+<!-- EDIT MODAL FOR ITEMS -->
+ <div class="modal fade" id="editProduct<?php echo $data['item_id']?>" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Item</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="" class="form-horizontal">
+          <div class="form-group">
+             <input type="text" class="form-control" value="<?php echo $data['item_id']?>" readonly readonly>
+           </div>
+           <div class="form-group">
+           <input type="text" placeholder="Barcode" name="barcode" value="<?php echo $data['SKU']?>" class="form-control" />
+           </div>
+           <div class="form-group">
+           <input type="text" name="item_name" value="<?php echo $data['item_name']?>" class="form-control" placeholder="Item name" />
+           </div>
+           <div class="form-group">
+             <textarea rows="5" cols="50" class="form-control" placeholder="Description" name="description" required><?php echo $data['description']?></textarea>
+           </div>
+            <div class="form-group">
+            <input type="number" placeholder="Quantity" name="quantity" value="<?php echo $data['qty']?>" min="0" max="999999999" class="form-control" />
+            </div>
+            <div class="form-group">
+            <input type="number" placeholder="Price" name="price" value="<?php echo $data['price']?>" class="form-control" />
+            </div>
+            <div class="form-group">
+            <input type="date" name="stock_in" class="form-control" />
+            </div>
+           <div class="form-group">
+           <select name="status" class="form-control" value="<?php echo $data['status']?>">
+           <option readonly>Select Category</option>
+           <?php 
+           $query = "SELECT * FROM CATEGORY ORDER BY CATEGORY_ID";
+           $result = mysqli_query($db,$query) or die(mysqli_error($db));
+           foreach($result as $data):
+           ?>
+            <option value="<?php echo $data['category_id']?>"><?php echo strtoupper($data['category_name'])?></option>
+           <?php endforeach; ?>
+           </select>
+           </div>
+
+           <div class="form-group">
+           <input type="file" name="image" class="form-control">
+           </div>
+          <div class="modal-footer">
+          <h6>Le'tea Milktea Hub &copy; 2019</h6>
+            <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit" name="btn_save">Save</button>
+            <button type="reset" class="btn btn-danger"><i class="fa fa-times fa-fw"></i>Reset</button>
+         </div>
+         </form>  
+        </div>
+      </div>
+    </div>
+  </div>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -89,275 +135,104 @@ $sup .= "</select>";
         </div>
     </div>
 </div>
-<!-- ADD MODAL -->
-<div id="popup" class="modal-box">
-    <header>
-        <a href="#" class="js-modal-close close">×</a>
-        <h5>ADD INGREDIENT</h5>
-    </header>
-    <div class="modal-body">
-        <div class="form-style-2" >
-            <form action="" method="post">
-                <label for="barcode">
-                    <span>Barcode<span class="required">*</span></span>
-                    <input type="text" class="input-field" name="barcode" value="" maxlength="80" autofocus id="itemCode">
-                </label>
-
-                <label for="field2"><span>Ingredient Name<span class="required">*</span></span>
-                    <input type="text" class="input-field" name="field2" value="" />
-                </label>
-
-                <label for="field5"><span>Description</span>
-                    <textarea name="field5" class="textarea-field"></textarea>
-                </label>
-
-                <label>
-                    <span>Quantity</span>
-                    <input type="number" class="tel-number-field" name="tel_no_1" value="0" min="0" max="999999999" />
-                </label>
-
-                <label for="field1"><span>Price<span class="required"></span></span>
-                    <input type="number" class="input-field" name="field1" value="" />
-                </label>
-
-                <label for="field4"><span>Category</span>
-                    <select name="field4" class="select-field"></select>
-                </label>
-
-                <!-- <label for="field4">
-                    <span>Supplier</span>
-                    <select name="field4" class="select-field"></select>
-                </label> -->
-
-                <label for="date">
-                    <span>Date Stock in</span>
-                    <input type="Date" name="date" />
-                </label>
-
-                <label for="image">
-                    <span>Image</span>
-                    <input type="file" name="image">
-                </label>
-
-                <label>
-                    <span></span>
-                    <input type="submit" value="Save" />
-                </label>
-            </form>
-        </div>
-    </div>
-    <footer>
-        <h5>Le'tea Milktea Hub &copy; 2019</h5>
-    </footer>
-</div>
-<!-- EDIT MODAL -->
-<div id="popup2" class="modal-box">
-    <header>
-        <a href="#" class="js-modal-close close">×</a>
-        <h5>EDIT INGREDIENT</h5>
-    </header>
-    <div class="modal-body">
-        <div class="form-style-2">
-            <form action="" method="post">
-                <label for="field1">
-                    <span>Barcode<span class="required"></span></span>
-                    <input type="text" class="input-field" name="field1" value="" />
-                </label>
-
-                <label for="field2"><span>Ingredient Name<span class="required"></span></span>
-                    <input type="text" class="input-field" id="itemName" name="field2" value="" />
-                </label>
-
-                <label for="field5"><span>Description</span>
-                    <textarea name="field5" class="textarea-field"></textarea>
-                </label>
-
-                <label>
-                    <span>Quantity</span>
-                    <input type="number" class="tel-number-field" name="tel_no_1" value="0" min="0" max="999999999" />
-                </label>
-
-                <label for="field1"><span>Price<span class="required"></span></span>
-                    <input type="number" class="input-field" name="field1" value="" />
-                </label>
-
-                <label for="field4"><span>Category</span>
-                    <select name="field4" class="select-field"></select>
-                </label>
-
-                <!-- <label for="field4">
-                    <span>Supplier</span>
-                    <select name="field4" class="select-field"></select>
-                </label> -->
-
-                <label for="date">
-                    <span>Date Stock Arrival</span>
-                    <input type="Date" name="date" />
-                </label>
-
-                <label for="date">
-                    <span>Expiry Date</span>
-                    <input type="Date" name="date" />
-                </label>
-
-                <label for="images">
-                    <span>Image</span>
-                    <input type="file" name="image">
-                </label>
-
-                <label><span></span>
-                    <input type="submit" value="Update" />
-                </label>
-            </form>
-        </div>
-    </div>
-    <footer>
-        <h5>Le'tea Milktea Hub &copy; 2019</h5>
-    </footer>
-</div>
 <?php require_once '../require/footer.php';?>
 
-<!-- Form Styles -->
-<style type="text/css">
-    .form-style-2 {
-        max-width: 500px;
-        padding: 20px 12px 10px 20px;
-        font: 13px Arial, Helvetica, sans-serif;
-    }
+<!-- ADD MODAL FOR ITEMS -->
+<div class="modal fade" id="addItem" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="../libraries/addProduct.php" class="form-horizontal">
+          <div class="form-group">
+             <input type="hidden" class="form-control"  readonly readonly>
+           </div>
+           <div class="form-group">
+           <input type="text" placeholder="Barcode" name="barcode" class="form-control" />
+           </div>
+           <div class="form-group">
+           <input type="text" name="item_name" class="form-control" placeholder="Item name" />
+           </div>
+           <div class="form-group">
+             <textarea rows="5" cols="50" class="form-control" placeholder="Description" name="description" required></textarea>
+           </div>
+            <div class="form-group">
+            <input type="number" placeholder="Quantity" name="quantity" min="0" max="999999999" class="form-control" />
+            </div>
+            <div class="form-group">
+            <input type="number" placeholder="Price" name="price" value="" class="form-control" />
+            </div>
+            <div class="form-group">
+            <input type="date" name="stock_in" class="form-control" />
+            </div>
+           <div class="form-group">
+           <select name="category" class="form-control">
+           <option readonly>Select Category</option>
+           <?php 
+           $query = "SELECT * FROM CATEGORY ORDER BY CATEGORY_ID";
+           $result = mysqli_query($db,$query) or die(mysqli_error($db));
+           foreach($result as $data):
+           ?>
+            <option value="<?php echo $data['category_id']?>"><?php echo strtoupper($data['category_name'])?></option>
+           <?php endforeach; ?>
+           </select>
+           </div>
+           <div class="form-group">
+           <input type="file" name="image" class="form-control">
+           </div>
+          <div class="modal-footer">
+          <h6>Le'tea Milktea Hub &copy; 2019</h6>
+            <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit" name="save_item">Save</button>
+            <button type="reset" class="btn btn-danger"><i class="fa fa-times fa-fw"></i>Reset</button>
+         </div>
+         </form>  
+        </div>
+      </div>
+    </div>
+  </div>
 
-    .form-style-2-heading {
-        font-weight: bold;
-        font-style: italic;
-        border-bottom: 2px solid #ddd;
-        margin-bottom: 20px;
-        font-size: 15px;
-        padding-bottom: 3px;
-    }
-
-    .form-style-2 label {
-        display: block;
-        margin: 0px 0px 15px 0px;
-    }
-
-    .form-style-2 label>span {
-        width: 150px;
-        font-weight: bold;
-        float: left;
-        padding-top: 8px;
-        padding-right: 5px;
-    }
-
-    .form-style-2 span.required {
-        color: red;
-    }
-
-    .form-style-2 .tel-number-field {
-        width: 70px;
-        text-align: left;
-    }
-
-    .form-style-2 input.input-field,
-    .form-style-2 .select-field {
-        width: 50%;
-    }
-
-    .form-style-2 input.input-field,
-    .form-style-2 .tel-number-field,
-    .form-style-2 .textarea-field,
-    .form-style-2 .select-field {
-        box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        border: 1px solid #C2C2C2;
-        box-shadow: 1px 1px 4px #EBEBEB;
-        -moz-box-shadow: 1px 1px 4px #EBEBEB;
-        -webkit-box-shadow: 1px 1px 4px #EBEBEB;
-        border-radius: 3px;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        padding: 8px;
-        outline: none;
-    }
-
-    .form-style-2 .input-field:focus,
-    .form-style-2 .tel-number-field:focus,
-    .form-style-2 .textarea-field:focus,
-    .form-style-2 .select-field:focus {
-        border: 1px solid #0C0;
-    }
-
-    .form-style-2 .textarea-field {
-        height: 55px;
-        width: 55%;
-    }
-
-    .form-style-2 input[type=submit],
-    .form-style-2 input[type=button] {
-        border: none;
-        padding: 8px 15px 8px 15px;
-        background: #FF8500;
-        color: #fff;
-        box-shadow: 1px 1px 4px #DADADA;
-        -moz-box-shadow: 1px 1px 4px #DADADA;
-        -webkit-box-shadow: 1px 1px 4px #DADADA;
-        border-radius: 3px;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-    }
-
-    .form-style-2 input[type=submit]:hover,
-    .form-style-2 input[type=button]:hover {
-        background: #EA7B00;
-        color: #fff;
-    }
-</style>
-
-<!-- Script for Jquery Modals -->
-<script>
-    $(function () {
-
-        var appendthis = ("<div class='modal-overlay js-modal-close'></div>");
-
-        $('a[data-modal-id]').click(function (e) {
-            e.preventDefault();
-            $("body").append(appendthis);
-            $(".modal-overlay").fadeTo(300, 0.7);
-            //$(".js-modalbox").fadeIn(500);
-            var modalBox = $(this).attr('data-modal-id');
-            $('#' + modalBox).fadeIn($(this).data());
-        });
-
-
-        $(".js-modal-close, .modal-overlay").click(function () {
-            $(".modal-box, .modal-overlay").fadeOut(300, function () {
-                $(".modal-overlay").remove();
-            });
-        });
-
-        $(window).resize(function () {
-            $(".modal-box").css({
-                top: ($(window).height() - $(".modal-box").outerHeight()) / 10,
-                left: ($(window).width() - $(".modal-box").outerWidth()) / 2
-            });
-        });
-
-        $(window).resize();
-
-    });
-
-
-    $("#useBarcodeScanner").click(function(e){
-        e.preventDefault();
-        
-        $("#itemCode").focus();
-    });
-
-    $("#itemCode").keypress(function(e){
-        if(e.which === 13){
-            e.preventDefault();
-            
-            //change to next input by triggering the tab keyboard
-            $("#itemName").focus();
-        }
-    });
-</script>
+  
+<!-- ADD MODAL FOR ITEMS -->
+<div class="modal fade" id="addStock" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Stock Quantity</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="../libraries/addProduct.php" class="form-horizontal">
+           <div class="form-group">
+           <select name="category" class="form-control">
+           <option readonly>Select Category</option>
+           <?php 
+           $query = "SELECT * FROM item ORDER BY item_id";
+           $result = mysqli_query($db,$query) or die(mysqli_error($db));
+           foreach($result as $data):
+           ?>
+            <option value="<?php echo $data['item_id']?>"><?php echo strtoupper($data['item_name'])?></option>
+           <?php endforeach; ?>
+           </select>
+           </div>
+           <div class="form-group">
+            <input type="number" placeholder="Quantity" name="quantity" min="0" max="999999999" class="form-control" />
+            </div>
+          <div class="modal-footer">
+          <h6>Le'tea Milktea Hub &copy; 2019</h6>
+            <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit" name="save_item">Save</button>
+            <button type="reset" class="btn btn-danger"><i class="fa fa-times fa-fw"></i>Reset</button>
+         </div>
+         </form>  
+        </div>
+      </div>
+    </div>
+  </div>

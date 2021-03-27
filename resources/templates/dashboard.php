@@ -4,14 +4,14 @@
 <!-- main content -->
 	<div class="wrapper">
 		<div class="row">
-			<div class="col-2 col-m-5 col-sm-6">
+			<div class="col-3 col-m-3 col-sm-2">
 				<div class="counter bg-primary">
 					<p>
-						<i class="fas fa-tasks"></i>
+						<i class="fas fa-tasks fa-2x"></i>
 					</p>
 					<h3>INGREDIENT</h3>
 					<p><?php
-                        $query = "SELECT COUNT(*) FROM product";
+                        $query = "SELECT COUNT(*) FROM item";
                         $result = mysqli_query($db, $query) or die(mysqli_error($db));
                         while ($row = mysqli_fetch_array($result)) {
                             echo "$row[0]";
@@ -19,14 +19,14 @@
                     ?> Record(s) </p>
 				</div>
 			</div>
-            <div class="col-2 col-m-5 col-sm-6">
+            <div class="col-3 col-m-3 col-sm-2">
 				<div class="counter bg-primary">
 					<p>
-						<i class="fas fa-tasks"></i>
+						<i class="fas fa-store fa-2x""></i>
 					</p>
-					<h3>BRANCH</h3>
+					<h3>MERCHANT</h3>
 					<p><?php
-                        $query = "SELECT COUNT(*) FROM branch";
+                        $query = "SELECT COUNT(*) FROM merchant";
                         $result = mysqli_query($db, $query) or die(mysqli_error($db));
                         while ($row = mysqli_fetch_array($result)) {
                             echo "$row[0]";
@@ -34,10 +34,10 @@
                     ?> Record(s) </p>
 				</div>
 			</div>
-			<div class="col-2 col-m-5 col-sm-6">
+			<div class="col-3 col-m-3 col-sm-2 ">
 				<div class="counter bg-warning">
 					<p>
-						<i class="fas fa-spinner"></i>
+						<i class="fa fa-address-book fa-2x"></i>
 					</p>
 					<h3>CUSTOMER</h3>
 					<p><?php
@@ -49,10 +49,10 @@
                     ?> Record(s) </p>
 				</div>
 			</div>
-			<div class="col-2 col-m-5 col-sm-6">
+			<div class="col-3 col-m-3 col-sm-3">
 				<div class="counter bg-success">
 					<p>
-						<i class="fas fa-check-circle"></i>
+						<i class="fas fa-user-circle fa-2x"></i>
 					</p>
 					<h3>USERS</h3>
 					<p><?php
@@ -64,14 +64,14 @@
                     ?> Record(s) </p>
 				</div>
 			</div>
-			<div class="col-2 col-m-5 col-sm-6">
+			<div class="col-3 col-m-3 col-sm-3">
 				<div class="counter bg-danger">
 					<p>
-						<i class="fas fa-bug"></i>
+						<i class="fa fa-shopping-cart fa-2x"></i>
 					</p>
 					<h3>SALES</h3>
 					<p><?php
-                        $query = "SELECT COUNT(*) FROM sales";
+                        $query = "SELECT COUNT(*) FROM transaction";
                         $result = mysqli_query($db, $query) or die(mysqli_error($db));
                         while ($row = mysqli_fetch_array($result)) {
                             echo "$row[0]";
@@ -81,7 +81,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-9 col-m-12 col-sm-12">
+			<div class="col-5 col-m-8 col-sm-9">
 				<div class="card">
 					<div class="card-header">
 						<h3>
@@ -90,7 +90,7 @@
 						<i class="fas fa-ellipsis-h"></i>
 					</div>
 					<div class="card-content">
-						<?php $query=mysqli_query($db,"SELECT * FROM product INNER JOIN category ON category.category_ID = product.cat_ID INNER JOIN supplier ON supplier.supplier_ID = product.supplier_ID ORDER BY p_name LIMIT 5" )or die(mysqli_error($db)); ?>
+						<?php $query=mysqli_query($db,"SELECT * FROM item INNER JOIN category ON category.category_ID = item.category_ID ORDER BY item_name LIMIT 5" )or die(mysqli_error($db)); ?>
                     <table>
                         <thead>
                             <tr>
@@ -107,14 +107,12 @@
                         <tbody>
                             <?php while($row=mysqli_fetch_array($query)){ ?>
                             <tr>
-                                <td><img style="width:80px;height:60px" src=" ../dist/uploads/<?php echo $row['p_pic'];?>"></td>
-                                <td><?php echo $row['p_code'];?></td>
-                                <td><?php echo $row['p_name'];?></td>
-                                <td><?php echo $row['supplier_name'];?></td>
-                                <td><?php echo $row['p_qty'];?></td>
-                                <td><?php echo $row['p_price'];?></td>
+                                <td><img style="width:80px;height:60px" src=" ../dist/uploads/<?php echo $row['image'];?>"></td>
+                                <td><?php echo $row['SKU'];?></td>
+                                <td><?php echo $row['item_name'];?></td>
                                 <td><?php echo $row['category_name'];?></td>
-                                
+                                <td><?php echo $row['qty'];?></td>
+                                <td><?php echo $row['price'];?></td>   
                             </tr>
                             <?php } ?>
 							</tbody>
@@ -122,7 +120,7 @@
 					</div>
 				</div>
 			</div>
-	 <div class="col-2 col-m-5 col-sm-5">
+	 <div class="col-3 col-m-3 col-sm-3">
             <div class="card">
                 <div class="card-header">
                     <h3>
@@ -133,7 +131,7 @@
                 <div class="card-content">
                     <div class="progress-wrapper">
                      <?php 
-                                $query = "SELECT p_name, p_code FROM product order by p_id asc LIMIT 10";
+                                $query = "SELECT item_name, sku FROM item order by item_id asc LIMIT 10";
                                 $result = mysqli_query($db, $query) or die(mysqli_error($db));
                                 while ($row = mysqli_fetch_array($result))  { ?>
                                  <ul style="list-style-type: square;margin-top: 5px; margin-bottom: 1 em; margin-left: 0; margin-right: 0;padding-left: 15%;">

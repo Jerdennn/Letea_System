@@ -1,6 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../session.php';
+require_once '../function.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,9 +14,11 @@ require_once '../session.php';
     <link rel="stylesheet" type="text/css" href="../../public_html/fontawesome-free/https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
     <link rel="stylesheet" type="text/css" href="../../public_html/fontawesome-free/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/animate.css/animate.css" type="text/css" />
+    <link rel="stylesheet" href="https://unpkg.com/rmodal/dist/rmodal.css" type="text/css" />
     <!-- End import lib -->
     <link rel="stylesheet" type="text/css" href="../../public_html/css/dashboard.css">
-	<link rel="stylesheet" type="text/css" href="../../public_html/css/modalStyle.css">
+    <link rel="stylesheet" type="text/css" href="../../public_html/css/modal.css">
 
 </head>
 <body class="overlay-scrollbar">
@@ -29,8 +32,7 @@ require_once '../session.php';
 				</a>
 			</li>
 			<li class="nav-item">
-				<img src="../../public_html/img/letea.png" alt="ATPro logo" class="logo logo-light">
-				<img src="../../public_html/img/letea.png" alt="ATPro logo" class="logo logo-dark">
+				
 			</li>
 		</ul>
 		<!-- end nav left -->
@@ -52,7 +54,7 @@ require_once '../session.php';
 				<a class="nav-link">
 					<i class="fas fa-bell dropdown-toggle" data-toggle="notification-menu"></i>
 					<span class="navbar-badge"><?php 
-					$query = "SELECT COUNT(*) AS counts FROM PRODUCT WHERE P_QTY < 15";
+					$query = "SELECT COUNT(*) AS counts FROM item WHERE qty < 15";
 					$result = mysqli_query($db,$query);
 					$row = mysqli_fetch_array($result);
 						echo $row['counts'];
@@ -65,7 +67,7 @@ require_once '../session.php';
 						</span>
 					</div>
 					<div class="dropdown-menu-content overlay-scrollbar scrollbar-hover">
-					<?php $query = "SELECT p_name FROM product WHERE p_qty < 15 LIMIT 5";
+					<?php $query = "SELECT item_name FROM item WHERE p_qty < 15 LIMIT 5";
 						  $result = mysqli_query($db,$query);?>
 						<?php while($row = mysqli_fetch_array($result)){ ?>		
 						<li class="dropdown-menu-item">
@@ -73,7 +75,7 @@ require_once '../session.php';
 							<div>
 								<i class="fas fa-clipboard-list"></i>
 							</div>
-							<?php echo $row['p_name']; ?>
+							<?php echo $row['item_name']; ?>
 						<?php } ?>
 					</div>
 					<div class="dropdown-menu-footer">

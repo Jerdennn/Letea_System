@@ -21,13 +21,13 @@ $finalcode='RS-'.createRandomPassword();
 ?>
 
 <?php
-  $query = 'SELECT USER_ID, t.TYPE FROM users u INNER JOIN type t ON t.TYPE_ID=u.TYPE_ID WHERE USER_ID = '.$_SESSION['MEMBER_ID'].' ';
+  $query = 'SELECT USER_ID, r.role_id FROM users u INNER JOIN roles r ON r.role_id=u.role_id WHERE USER_ID = '.$_SESSION['id'].' ';
   $result = mysqli_query($db, $query) or die (mysqli_error($db));
   
   while ($row = mysqli_fetch_assoc($result)) {
-            $mem_id = $row['TYPE'];
+            $mem_id = $row['role_id'];
                    
-  if ($mem_id=='ADMINISTRATOR'){ ?>
+  if ($mem_id==1){ ?>
 <!-- sidebar -->
 <div class="sidebar">
     <ul class="sidebar-nav">
@@ -126,7 +126,7 @@ $finalcode='RS-'.createRandomPassword();
 <!-- end sidebar -->
 <?php } 
       
-        if ($mem_id=='SALES MANAGER'){ ?>
+        if ($mem_id==2){ ?>
 <!-- sidebar -->
 <div class="sidebar">
     <ul class="sidebar-nav">
@@ -201,7 +201,7 @@ $finalcode='RS-'.createRandomPassword();
 <!-- end sidebar -->
 <?php } 
       
-       if ($mem_id=='INVENTORY CLERK'){ ?>
+       if ($mem_id==3){ ?>
 <!-- sidebar -->
 <div class="sidebar">
     <ul class="sidebar-nav">
