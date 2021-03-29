@@ -28,11 +28,11 @@
                                 <th style="text-align:left;">Category Name</th>
                                 <th style="text-align:left;">Description</th>
                                 <th style="text-align:left;">Status</th>
-                                <th style="text-align:left;">Action</th>
+                                <th style="text-align:center;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                        <?php $query ="SELECT * FROM CATEGORY WHERE STATUS = 0 ORDER BY CATEGORY_ID ASC";
+                        <?php $query ="SELECT * FROM CATEGORY ORDER BY CATEGORY_ID ASC";
                         $result = mysqli_query($db, $query) or die (mysqli_error($db)); ?>
                         <?php foreach($result as $data):?>
                        
@@ -47,7 +47,7 @@
                           echo "Unavailable";
                         endif;
                         ?></td>
-                                <td>
+                                <td style="text-align:center;">
                                     <button data-toggle="modal" data-target="#editModal<?php echo $data['category_id']?>" type="button" class="btn btn-primary bg-gradient-primary"><i class="fas fa-pen fa-m"> EDIT</i></button>
                                     <button href="admin_category.php?cat_del=<?php echo $data['category_id']?>" class="btn btn-danger"><i class="fas fa-trash fa-m"> DELETE</i></button>
                                 </td>
@@ -62,15 +62,15 @@
           </button>
         </div>
         <div class="modal-body">
-          <form method="post" action="">
+          <form method="POST" action="../libraries/editCategory.php">
           <div class="form-group">
-             <input type="text" class="form-control" value="<?php echo $data['category_id']?>" readonly>
+             <input type="hidden" class="form-control" name="category_id" value="<?php echo $data['category_id']?>" readonly>
            </div>
            <div class="form-group">
-             <input class="form-control" placeholder="Category name" name="category_name" required value="<?php echo $data['category_name']?>">
+             <input class="form-control" name="category_name" required value="<?php echo $data['category_name']?>">
            </div>
            <div class="form-group">
-             <textarea rows="5" cols="50" class="form-control" placeholder="Description" name="description" required><?php echo $data['description']?></textarea>
+             <textarea rows="5" cols="50" class="form-control" name="description" required><?php echo $data['description']?></textarea>
            </div>
            <div class="form-group">
            <select name="status" class="form-control" value="<?php echo $data['status']?>">
@@ -82,7 +82,7 @@
           <div class="modal-footer">
           <h6>Le'tea Milktea Hub &copy; 2019</h6>
             <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary" type="submit" name="btn_save">Update</button>
+            <button class="btn btn-primary" type="submit">Update</button>
          </div>
          </form>  
         </div>

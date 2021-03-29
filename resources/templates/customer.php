@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3 style="text-transform:uppercase;">
-                        Customer Records
+                        Customer
                     </h3>
                 </div>
                 <div class="card-content">
@@ -25,7 +25,7 @@
                                 <th>Name</th>
                                 <th>Address</th>
                                 <th>Contact</th>
-                                <th>Action</th>
+                                <th style="text-align:center;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +40,7 @@
                                 <td><?php echo $data['customer_name']?></td>
                                 <td><?php echo $data['customer_address']?></td>
                                 <td><?php echo $data['customer_phone']?></td>
-                                <td>
+                                <td style="text-align:center;">
                                 <button data-toggle="modal" data-target="#editCustomer<?php echo $data['customer_id']?>" type="button" class="btn btn-primary bg-gradient-primary"><i class="fas fa-pen fa-m"> Edit</i></button>
                                 <button href="admin_category.php?cat_del=<?php echo $data['customer_id']?>" class="btn btn-danger"><i class="fas fa-trash fa-m"> Delete</i></button>
                                 </td>
@@ -50,15 +50,15 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add Merchant</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Update Customer</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">
-          <form method="post" action="">
+          <form method="POST" action="../libraries/editCustomer.php">
           <div class="form-group">
-             <input class="form-control" name="customer_id" required value="<?php echo $data['customer_id']?>" readonly>
+             <input type="hidden" class="form-control" name="customer_id" value="<?php echo $data['customer_id']?>" readonly>
            </div>
            <div class="form-group">
              <input class="form-control"  name="customer_name" required value="<?php echo $data['customer_name']?>">
@@ -67,12 +67,12 @@
              <textarea rows="5" cols="50" class="form-control" name="customer_address" required><?php echo $data['customer_address']?></textarea>
            </div>
            <div class="form-group">
-             <input class="form-control" name="merchant_phone" required value="<?php echo $data['customer_phone']?>">
+             <input class="form-control" name="customer_phone" required value="<?php echo $data['customer_phone']?>">
             </div>
           <div class="modal-footer">
           <h6>Le'tea Milktea Hub &copy; 2019</h6>
             <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary" type="submit" name="btn_save">Update</button>
+            <button class="btn btn-primary" type="submit">Update</button>
          </div>
          </form>  
         </div>

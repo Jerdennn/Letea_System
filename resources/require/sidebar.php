@@ -21,13 +21,13 @@ $finalcode='RS-'.createRandomPassword();
 ?>
 
 <?php
-  $query = 'SELECT USER_ID, r.role_id FROM users u INNER JOIN roles r ON r.role_id=u.role_id WHERE USER_ID = '.$_SESSION['id'].' ';
+  $query = 'SELECT USER_ID,r.role_name, r.role_id FROM users u INNER JOIN roles r ON r.role_id=u.role_id WHERE USER_ID = '.$_SESSION['user_id'].' ';
   $result = mysqli_query($db, $query) or die (mysqli_error($db));
   
   while ($row = mysqli_fetch_assoc($result)) {
-            $mem_id = $row['role_id'];
+            $roles = $row['role_name'];
                    
-  if ($mem_id==1){ ?>
+  if ($roles=='administrator'){ ?>
 <!-- sidebar -->
 <div class="sidebar">
     <ul class="sidebar-nav">
@@ -126,7 +126,7 @@ $finalcode='RS-'.createRandomPassword();
 <!-- end sidebar -->
 <?php } 
       
-        if ($mem_id==2){ ?>
+        if ($roles=='sales clerk'){ ?>
 <!-- sidebar -->
 <div class="sidebar">
     <ul class="sidebar-nav">
@@ -181,9 +181,9 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../templates/category.php" class="sidebar-nav-link">
+            <a href="../templates/branch.php" class="sidebar-nav-link">
                 <div>
-                    <i class="fas fa-list-alt"></i>
+                <i class="fas fa-store"></i>
                 </div>
                 <span>Merchant</span>
             </a>
@@ -201,7 +201,7 @@ $finalcode='RS-'.createRandomPassword();
 <!-- end sidebar -->
 <?php } 
       
-       if ($mem_id==3){ ?>
+       if ($roles=='inventory clerk'){ ?>
 <!-- sidebar -->
 <div class="sidebar">
     <ul class="sidebar-nav">
@@ -232,19 +232,11 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../templates/category.php" class="sidebar-nav-link">
+            <a href="../templates/branch.php" class="sidebar-nav-link">
                 <div>
-                    <i class="fas fa-list-alt"></i>
+                <i class="fas fa-store"></i>
                 </div>
                 <span>Merchant</span>
-            </a>
-        </li>
-        <li class="sidebar-nav-item">
-            <a href="../templates/category.php" class="sidebar-nav-link">
-                <div>
-                    <i class="fas fa-list-alt"></i>
-                </div>
-                <span>Unit of Measurement</span>
             </a>
         </li>
     </ul>

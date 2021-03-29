@@ -18,7 +18,7 @@
                 </div>
                 <div class="card-content">
                     <?php 
-                    $query = "SELECT *, price * qty as total FROM item INNER JOIN category ON category.category_ID = item.category_ID ORDER BY item_id ASC LIMIT 10";
+                    $query = "SELECT *, price * qty as total FROM item INNER JOIN category ON category.category_ID = item.category_ID ORDER BY item_id DESC LIMIT 5";
                     $result = mysqli_query($db,$query)or die(mysqli_error($db));
                     ?>
                     <table>
@@ -29,9 +29,9 @@
                                 <th>SKU</th>
                                 <th>Name</th>
                                 <th>Description</th>
-                                <th>Category</th>
                                 <th>Qty</th>
                                 <th>Price</th>
+                                <th>Category</th>
                                 <th>Date</th>
                                 <th>Total</th>
                                 <th>Action</th>
@@ -39,7 +39,7 @@
                         </thead>
                         <tbody>
                             <?php 
-                            foreach($result as $data): ?>
+                            while($data=mysqli_fetch_array($result)){ ?>
                             <tr>
                                 <?php 
                                $availableqty = $data['qty'];
@@ -51,8 +51,8 @@
 				}
 			?>
                                 <td><?php echo $data['item_id'];?></td>
-                                <td><img style="width:80px;height:60px"
-                                        src=" ../../../../public_html/img/dist/uploads<?php echo $data['item_image'];?>">
+                                <td><img style="width:100px;height:100px;"
+                                        src="../../public_html/img/dist/uploads/<?php echo $data['item_image'];?>">
                                 </td>
                                 <td><?php echo $data['SKU'];?></td>
                                 <td><?php echo $data['item_name'];?></td>
@@ -72,21 +72,24 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Edit Item</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Update Item</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">
-          <form method="post" action="" class="form-horizontal">
+          <form method="POST" action="../libraries/editProduct.php" class="form-horizontal">
+          <center>
+          <img style="width:100px;height:100px;" src="../../public_html/img/dist/uploads/<?php echo $data['item_image']?>" alt="">
+          </center>
           <div class="form-group">
-             <input type="text" class="form-control" value="<?php echo $data['item_id']?>" readonly readonly>
+             <input type="hidden" class="form-control" value="<?php echo $data['item_id']?>" name="item_id" readonly>
            </div>
            <div class="form-group">
-           <input type="text" placeholder="Barcode" name="barcode" value="<?php echo $data['SKU']?>" class="form-control" />
+           <input type="text" placeholder="Barcode" name="barcode" value="<?php echo $data['SKU']?>" class="form-control" readonly/>
            </div>
            <div class="form-group">
-           <input type="text" name="item_name" value="<?php echo $data['item_name']?>" class="form-control" placeholder="Item name" />
+           <input type="text" name="item_name" value="<?php echo $data['item_name']?>" class="form-control" placeholder="Item name"/>
            </div>
            <div class="form-group">
              <textarea rows="5" cols="50" class="form-control" placeholder="Description" name="description" required><?php echo $data['description']?></textarea>
@@ -101,32 +104,28 @@
             <input type="date" name="stock_in" class="form-control" />
             </div>
            <div class="form-group">
-           <select name="status" class="form-control" value="<?php echo $data['status']?>">
+           <select name="category" class="form-control">
            <option readonly>Select Category</option>
            <?php 
-           $query = "SELECT * FROM CATEGORY ORDER BY CATEGORY_ID";
-           $result = mysqli_query($db,$query) or die(mysqli_error($db));
-           foreach($result as $data):
+           $query1 = "SELECT * FROM CATEGORY ORDER BY category_id";
+           $result1 = mysqli_query($db,$query1) or die(mysqli_error($db));
+           foreach($result1 as $data1):
            ?>
-            <option value="<?php echo $data['category_id']?>"><?php echo strtoupper($data['category_name'])?></option>
+            <option value="<?php echo $data1['category_id']?>"><?php echo strtoupper($data1['category_name'])?></option>
            <?php endforeach; ?>
            </select>
-           </div>
-
-           <div class="form-group">
-           <input type="file" name="image" class="form-control">
            </div>
           <div class="modal-footer">
           <h6>Le'tea Milktea Hub &copy; 2019</h6>
             <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary" type="submit" name="btn_save">Update</button>
+            <button class="btn btn-primary" type="submit">Update</button>
          </div>
          </form>  
         </div>
       </div>
     </div>
   </div>
-                            <?php endforeach; ?>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -148,7 +147,7 @@
         </div>
         <div class="modal-body">
           <form method="post" action="../libraries/addProduct.php" class="form-horizontal">
-          <div class="form-group">
+            <div class="form-group">
              <input type="hidden" class="form-control" readonly>
            </div>
            <div class="form-group">
@@ -158,7 +157,7 @@
            <input type="text" name="item_name" class="form-control" placeholder="Item name" required/>
            </div>
            <div class="form-group">
-             <textarea rows="5" cols="50" class="form-control" placeholder="Description" name="description" required></textarea>
+            <textarea rows="5" cols="50" class="form-control" placeholder="Description" name="description" required></textarea>
            </div>
             <div class="form-group">
             <input type="number" placeholder="Quantity" name="quantity" min="0" max="999999999" class="form-control" />
@@ -173,16 +172,13 @@
            <select name="category" class="form-control">
            <option readonly>Select Category</option>
            <?php 
-           $query = "SELECT * FROM CATEGORY ORDER BY CATEGORY_ID";
-           $result = mysqli_query($db,$query) or die(mysqli_error($db));
-           foreach($result as $data):
+           $query1 = "SELECT * FROM CATEGORY ORDER BY CATEGORY_ID";
+           $result1 = mysqli_query($db,$query1) or die(mysqli_error($db));
+           foreach($result1 as $data1):
            ?>
-            <option value="<?php echo $data['category_id']?>"><?php echo strtoupper($data['category_name'])?></option>
+            <option value="<?php echo $data1['category_id']?>"><?php echo strtoupper($data1['category_name'])?></option>
            <?php endforeach; ?>
            </select>
-           </div>
-           <div class="form-group">
-           <input type="file" name="image" class="form-control">
            </div>
           <div class="modal-footer">
           <h6>Le'tea Milktea Hub &copy; 2019</h6>
@@ -197,7 +193,7 @@
   </div>
 
   
-<!-- ADD MODAL FOR ITEMS -->
+<!-- ADD MODAL FOR RESTOCK -->
 <div class="modal fade" id="addStock" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">

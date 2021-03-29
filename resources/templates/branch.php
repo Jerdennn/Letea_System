@@ -64,9 +64,9 @@
           </button>
         </div>
         <div class="modal-body">
-          <form method="post" action="">
+          <form method="POST" action="../libraries/editMerchant.php">
           <div class="form-group">
-             <input class="form-control" name="merchant_id" required value="<?php echo $data['merchant_id']?>" readonly>
+             <input type="hidden" class="form-control" name="merchant_id" required value="<?php echo $data['merchant_id']?>" readonly>
            </div>
            <div class="form-group">
              <input class="form-control"  name="merchant_name" required value="<?php echo $data['merchant_name']?>">

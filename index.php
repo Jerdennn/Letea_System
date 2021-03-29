@@ -42,7 +42,7 @@ require_once 'resources/session.php';
 				<select name="merchant" id="" class="select-css">
 					<option readonly>SELECT MERCHANT</option>
 							<?php 
-								$query = "SELECT * FROM merchant ORDER BY merchant_name";
+								$query = "SELECT * FROM merchant ORDER BY merchant_id";
 								$result = mysqli_query($db,$query) or die(mysqli_error($db));
 								
 								foreach($result as $data): ?>

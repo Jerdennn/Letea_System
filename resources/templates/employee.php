@@ -16,23 +16,23 @@
                     </h4>
                 </div>
                 <div class="card-content">
-                    <table>
+                    <table style='text-align:center;'>
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
-                                <th>Phone</th>
-                                <th>Gender</th>
+                                <th style='text-align:center;'>ID</th>
+                                <th style='text-align:center;'>Firstname</th>
+                                <th style='text-align:center;'>Lastname</th>
+                                <th style='text-align:center;'>Phone</th>
+                                <th style='text-align:center;'>Gender</th>
                                 <th style="text-align:center;">Address</th>
-                                <th>Role</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th style='text-align:center;'>Role</th>
+                                <th style='text-align:center;'>Status</th>
+                                <th style='text-align:center;'>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                      $query ="SELECT * , r.role_name FROM EMPLOYEE e JOIN roles r ON e.role_id=r.role_id";
+                      $query ="SELECT *, r.role_name FROM EMPLOYEE e JOIN roles r ON r.role_id = e.role_id";
                       $result = mysqli_query($db, $query) or die (mysqli_error($db)); ?>
 
                             <?php foreach($result as $data):?>
@@ -53,16 +53,18 @@
                                 ?></td>
                                 <td style="text-align:center;"><?php echo $data['address']?></td>
                                 <td><?php echo strtoupper($data['role_name'])?></td>
-                                <td><?php $status = $data['status'];
+                                <td>
+                              <?php
+                              $status = $data['employee_status'];  
                                 if($status == 0):
-                                  echo "Active";
-                                else:
                                   echo "Not Active";
+                                elseif($status == 1):
+                                  echo "Active";
                                 endif;
                                 ?></td>
                                 <td>
-                                    <button data-toggle="modal" data-target="#editModal<?php echo $data['employee_id']?>" type="button" class="btn btn-primary bg-gradient-primary"><i class="fas fa-pen fa-l"></i></button>
-                                    <button href="admin_category.php?cat_del=<?php echo $data['category_id']?>" class="btn btn-danger"><i class="fas fa-trash fa-l"></i></button>
+                                    <button data-toggle="modal" data-target="#editModal<?php echo $data['employee_id']?>" type="button" class="btn btn-primary bg-gradient-primary"><i class="fas fa-pen fa-l"></i> EDIT</button>
+                                    <button href="admin_category.php?cat_del=<?php echo $data['category_id']?>" class="btn btn-danger"><i class="fas fa-trash fa-l"></i> REMOVE</button>
                                 </td>
 <!-- EDIT MODAL CATEGORY -->
 <div class="modal fade" id="editModal<?php echo $data['employee_id']?>" tabindex="-1" role="dialog">
@@ -75,7 +77,7 @@
           </button>
         </div>
         <div class="modal-body">
-        <form method="post" action="../libraries/addEmployee.php">
+        <form method="post" action="">
             <div class="form-group">
              <input class="form-control"  name="fname" value="<?php echo $data['employee_id']?>" readonly>
            </div>
@@ -87,7 +89,16 @@
            </div>
            <div class="form-group">
            <select name="gender" class="form-control"  value="<?php echo $data['gender']?>">
-           <option readonly>Gender</option>
+           <option><?php  
+           $gender = $data['gender'];
+           if ($gender == 0):
+            echo "Male";
+           elseif ($gender == 1):
+            echo "Female";
+           else:
+            echo "Other";
+           endif;
+           ?></option>
            <option value=0>Male</option>
            <option value=1>Female</option>
            <option value=2>Other</option>
@@ -101,17 +112,24 @@
            </div>
            <div class="form-group">
            <select name="roles" class="form-control">
-           <option readonly>Select Role</option>
-            <?php $query = "SELECT * FROM ROLES ORDER BY ROLE_ID ASC";
-            $result = mysqli_query($db,$query) or die(mysqli_error($db));
-            foreach($result as $data): ?>
-            <option value="<?php echo $data['role_id']?>"><?php echo strtoupper($data['role_name'])?></option>
+           <option readonly><?php echo strtoupper($data['role_name'])?></option>
+            <?php $query1 = "SELECT * FROM ROLES ORDER BY ROLE_ID ASC";
+            $result1 = mysqli_query($db,$query1) or die(mysqli_error($db));
+            foreach($result1 as $data1): ?>
+            <option value="<?php echo $data1['role_id']?>"><?php echo strtoupper($data['role_name'])?></option>
             <?php endforeach;?>
            </select>
            </div>
            <div class="form-group">
-           <select name="status" class="form-control"  value="<?php echo $data['status']?>">
-           <option readonly>Select Employee Status</option>
+           <select name="status" class="form-control">
+           <option readonly><?php 
+           $status = $data['employee_status'];
+              if($status == 0):
+                echo "Not Active";
+              elseif($status == 1):
+                echo "Active";
+              endif;
+            ?></option>
            <option value=0>Active</option>
            <option value=1>Not Active</option>
            </select>
@@ -122,13 +140,13 @@
           <div class="modal-footer">
           <h6>Le'tea Milktea Hub &copy; 2019</h6>
             <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary" type="submit" name="btn_save">Update</button>
+            <button class="btn btn-primary" type="submit">Update</button>
          </div>
          </form>  
         </div>
       </div>
     </div>
-  </div>
+</div>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
