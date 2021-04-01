@@ -52,30 +52,32 @@ require_once '../session.php';
 			<li class="nav-item dropdown">
 				<a class="nav-link">
 					<i class="fas fa-bell dropdown-toggle" data-toggle="notification-menu"></i>
-					<span class="navbar-badge"><?php 
+					<span class="navbar-badge">
+					<?php 
 					$query = "SELECT COUNT(*) AS counts FROM item WHERE qty < 15";
 					$result = mysqli_query($db,$query);
 					$row = mysqli_fetch_array($result);
-						echo $row['counts'];
-					?></span>
+					echo $row['counts'];?>
+					</span>
 				</a>
 				<ul id="notification-menu" class="dropdown-menu notification-menu">
 					<div class="dropdown-menu-header">
 						<span>
-							Notifications
+							Items that need to be Re-ordered
 						</span>
 					</div>
 					<div class="dropdown-menu-content overlay-scrollbar scrollbar-hover">
-					<?php $query = "SELECT item_name FROM item WHERE p_qty < 15 LIMIT 5";
-						  $result = mysqli_query($db,$query);?>
-						<?php while($row = mysqli_fetch_array($result)){ ?>		
+						<?php $query1 = "SELECT item_name FROM item WHERE qty < 15";
+						$results = mysqli_query($db,$query1);
+						while($rows = mysqli_fetch_array($results)){ ?>
 						<li class="dropdown-menu-item">
 							<a href="#" class="dropdown-menu-link">
 							<div>
 								<i class="fas fa-clipboard-list"></i>
 							</div>
-							<?php echo $row['item_name']; ?>
+							<?php echo $rows['item_name']?>
 						<?php } ?>
+						</a>		
 					</div>
 					<div class="dropdown-menu-footer">
 						<span>

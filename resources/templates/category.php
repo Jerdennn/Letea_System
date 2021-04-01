@@ -33,8 +33,8 @@
                         </thead>
                         <tbody>
                         <?php $query ="SELECT * FROM CATEGORY ORDER BY CATEGORY_ID ASC";
-                        $result = mysqli_query($db, $query) or die (mysqli_error($db)); ?>
-                        <?php foreach($result as $data):?>
+                        $result = mysqli_query($db, $query) or die(mysqli_error($db)); ?>
+                        <?php foreach ($result as $data):?>
                        
                             <tr>
                                 <td><?php echo $data['category_id']?></td>

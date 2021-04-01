@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "sophisticode.php-formatter",
+        "junstyle.php-cs-fixer",
+        "ikappas.phpcs",
+        "rifi2k.format-html-in-php"
+    ]
+}

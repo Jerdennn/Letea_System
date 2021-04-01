@@ -33,7 +33,6 @@
                                 <th>Price</th>
                                 <th>Category</th>
                                 <th>Date</th>
-                                <th>Total</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -101,11 +100,11 @@
             <input type="number" placeholder="Price" name="price" value="<?php echo $data['price']?>" class="form-control" />
             </div>
             <div class="form-group">
-            <input type="date" name="stock_in" class="form-control" />
+            <input type="date" name="stock_in" class="form-control" value="<?php echo $data['created_at']?>" />
             </div>
            <div class="form-group">
            <select name="category" class="form-control">
-           <option readonly>Select Category</option>
+           <option readonly><?php echo $data['category_name'];?></option>
            <?php 
            $query1 = "SELECT * FROM CATEGORY ORDER BY category_id";
            $result1 = mysqli_query($db,$query1) or die(mysqli_error($db));

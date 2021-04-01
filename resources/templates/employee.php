@@ -33,9 +33,9 @@
                         <tbody>
                             <?php
                       $query ="SELECT *, r.role_name FROM EMPLOYEE e JOIN roles r ON r.role_id = e.role_id";
-                      $result = mysqli_query($db, $query) or die (mysqli_error($db)); ?>
+                      $result = mysqli_query($db, $query) or die(mysqli_error($db)); ?>
 
-                            <?php foreach($result as $data):?>
+                            <?php foreach ($result as $data):?>
 
                             <tr>
                                 <td><?php echo $data['employee_id']?></td>
@@ -43,7 +43,7 @@
                                 <td><?php echo $data['lastname']?></td>
                                 <td><?php echo $data['phone']?></td>
                                 <td><?php $gender=$data['gender'];
-                                if($gender == 0):
+                                if ($gender == 0):
                                   echo "Male";
                                 elseif ($gender == 1):
                                   echo "Female";
@@ -55,10 +55,10 @@
                                 <td><?php echo strtoupper($data['role_name'])?></td>
                                 <td>
                               <?php
-                              $status = $data['employee_status'];  
-                                if($status == 0):
+                              $status = $data['employee_status'];
+                                if ($status == 0):
                                   echo "Not Active";
-                                elseif($status == 1):
+                                elseif ($status == 1):
                                   echo "Active";
                                 endif;
                                 ?></td>
@@ -79,7 +79,7 @@
         <div class="modal-body">
         <form method="post" action="">
             <div class="form-group">
-             <input class="form-control"  name="fname" value="<?php echo $data['employee_id']?>" readonly>
+             <input type="hidden" class="form-control"  name="fname" value="<?php echo $data['employee_id']?>" readonly>
            </div>
            <div class="form-group">
              <input type="text" class="form-control"  name="fname" value="<?php echo $data['firstname']?>" required>
@@ -89,7 +89,7 @@
            </div>
            <div class="form-group">
            <select name="gender" class="form-control"  value="<?php echo $data['gender']?>">
-           <option><?php  
+           <option><?php
            $gender = $data['gender'];
            if ($gender == 0):
             echo "Male";
@@ -114,19 +114,19 @@
            <select name="roles" class="form-control">
            <option readonly><?php echo strtoupper($data['role_name'])?></option>
             <?php $query1 = "SELECT * FROM ROLES ORDER BY ROLE_ID ASC";
-            $result1 = mysqli_query($db,$query1) or die(mysqli_error($db));
-            foreach($result1 as $data1): ?>
+            $result1 = mysqli_query($db, $query1) or die(mysqli_error($db));
+            foreach ($result1 as $data1): ?>
             <option value="<?php echo $data1['role_id']?>"><?php echo strtoupper($data['role_name'])?></option>
             <?php endforeach;?>
            </select>
            </div>
            <div class="form-group">
            <select name="status" class="form-control">
-           <option readonly><?php 
+           <option readonly><?php
            $status = $data['employee_status'];
-              if($status == 0):
+              if ($status == 0):
                 echo "Not Active";
-              elseif($status == 1):
+              elseif ($status == 1):
                 echo "Active";
               endif;
             ?></option>
@@ -191,8 +191,8 @@
            <select name="roles" class="form-control">
            <option readonly>Select Role</option>
             <?php $query = "SELECT * FROM ROLES ORDER BY ROLE_ID ASC";
-            $result = mysqli_query($db,$query) or die(mysqli_error($db));
-            foreach($result as $data): ?>
+            $result = mysqli_query($db, $query) or die(mysqli_error($db));
+            foreach ($result as $data): ?>
             <option value="<?php echo $data['role_id']?>"><?php echo strtoupper($data['role_name'])?></option>
             <?php endforeach;?>
            </select>

@@ -4,104 +4,78 @@
     <div class="row">
         <div class="header">
             <h3 style="text-transform:uppercase;">
-                &nbsp; &nbsp; Sales Report &nbsp;
+                &nbsp; &nbsp; &nbsp; Reports &nbsp;
             </h3>
         </div>
+       
     </div>
-    <form method="GET" action="report.php" style="display:flex; align-items:left;">
-        <div class="form-group">
-            <h2>From: </h2>
-        </div>
-        <?php 
-         $from_date = $_GET['from'];
-         $to_date = $_GET['to'];
-        if (date($to_date) < date($from_date)){
-            echo "
-            <div class=form-group>
-                <input type=date name=from required style='border: 2px solid red;' >
-            </div>";
-        } 
-        else { 
-        echo "<div class=form-group>
-            <input type=date name=from required>
-        </div>";
-            } ?>
-            
-            <div class=form-group >
-            <h2>&nbsp;&nbsp;&nbsp;To: </h2>
-            </div>
-    <?php 
-        if (date($to_date) < date($from_date)){
-            echo "<div class=form-group>
-            <input type=date name=to required  style='border: 2px solid red;'>
-            </div>";
-        }
-       else{
-        echo "<div class=form-group>
-            <input type=date name=to required>
-        </div>";
-            }
-        ?> 
-          <div class="form-group">
-            <input type="submit" value="Search" style="position:relative;">
-        </div> 
-    </form>
 
+<form method="GET" action="report.php" class="row gy-2 gx-3 align-items-center">
+        <div class="col-auto">
+           
+        </div>
+        <div class="col-auto">
+           <h3>Select Merchant</h3>
+        </div>
+        <div class="col-auto">
+          <select name="merchant" class="form-control">
+          <?php $merchant = $_GET['merchant']?>
+          <option readonly>SELECT MERCHANT</option>
+          <?php
+          $query = "SELECT * FROM merchant";
+          $result = mysqli_query($db,$query) or die(mysqli_error($db));
+            foreach($result as $data): ?>
+            <option value="<?php echo $data['merchant_name']?>"><?php echo $data['merchant_name']?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-success"> Search</button>
+        </div> 
+        </form>
     <div class="col-20 col-m-12 col-sm-12">
         <div class="card">
             <div class="card-header">
+            
                 <h3 style="text-transform:uppercase;">
-                <?php 
-                if (date($to_date) < date($from_date)){
-                    echo "From date cannot be greater than To date";
-                }else{
-                    echo "Sales Report from $from_date to $to_date";
-                } 
-               ?>
+               <?php 
+               echo "Inventory Report for ".$merchant; 
+            ?>
+
                 </h3>
             </div>
-            <div class="card-content">
-                <?php  
-                $from_date = $_GET['from'];
-                $to_date = $_GET['to'];
-                    $query = mysqli_query($db,"SELECT * FROM sales WHERE tran_date BETWEEN '$from_date' AND '$to_date' ORDER by tran_id ASC") or die (mysqli_error($db));
-                ?>
+            
                 <table>
                     <thead>
                         <tr>
-                            <th>Transaction ID</th>
-                            <th>Transaction Date</th>
-                            <th>Customer Name</th>
-                            <th>Invoice Number</th>
-                            <th>Amount</th>
+                            <th>SKU</th>
+                            <th>Name</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                            <th>Total</th>
                         </tr>
 
                     </thead>
                     <tbody>
-                        <?php while($row = mysqli_fetch_array ($query)){ ?>
+                       
                         <tr>
-                            <td><?php echo $row['tran_id'];?></td>
-                            <td><?php echo $row['tran_date'];?></td>
-                            <td><?php echo $row['customer_name'];?></td>
-                            <td><?php echo $row['invoice_number'];?></td>
-                            <td><?php echo $row['item_amount'];?></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
-                        <?php } ?>
+                       
                         <tr>
                             <td colspan="4">TOTAL</td>
-                            <td><?php
-                                $from_date = $_GET['from'];
-                                $to_date = $_GET['to'];
-                                $query1 = "SELECT sum(item_amount) FROM sales WHERE tran_date BETWEEN '$from_date' AND '$to_date' ORDER by tran_id asc";
-                                $result = mysqli_query($db,$query1);
-                                while ($row1 = mysqli_fetch_array($result)) {
-                                  $total = $row1['sum(item_amount)'];
-                                  echo number_format($total);
-                              }
-                              ?></td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td> <a><input type="submit" name="trans_save" value="PRINT"></a></td>
+                            <td>
+                            <button class="btn btn-primary">PDF</button>
+                            <button class="btn btn-primary">EXCEL</button>
+                            <button class="btn btn-primary">PRINT</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
