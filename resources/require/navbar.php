@@ -81,7 +81,7 @@ require_once '../session.php';
 					</div>
 					<div class="dropdown-menu-footer">
 						<span>
-							 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;Products that need to Re-Order 
+						 &nbsp; &nbsp;Products that need to Re-Order 
 						</span>
 					</div>
 				</ul>

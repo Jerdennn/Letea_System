@@ -18,6 +18,22 @@ function createRandomPassword() {
 	return $pass;
 }
 $finalcode='RS-'.createRandomPassword(); 
+
+
+function formatMoney($number, $fractional=false) {
+    if ($fractional) {
+        $number = sprintf('%.2f', $number);
+    }
+    while (true) {
+        $replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
+        if ($replaced != $number) {
+            $number = $replaced;
+        } else {
+            break;
+        }
+    }
+    return $number;
+}
 ?>
 
 <?php
@@ -50,11 +66,19 @@ $finalcode='RS-'.createRandomPassword();
             </a>
         </li>
         <li class="sidebar-nav-item">
-            <a href="../templates/report.php?from=0&to=0" class="sidebar-nav-link">
+            <a href="../templates/report.php?merchant=" class="sidebar-nav-link">
+                <div>
+                    <i class="fas fa-boxes"></i>
+                </div>
+                <span>Inventory Report</span>
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="../templates/sales_report.php?merchant= &from=0&to=0" class="sidebar-nav-link">
                 <div>
                     <i class="fas fa-chart-area"></i>
                 </div>
-                <span>Reports</span>
+                <span>Sales Report</span>
             </a>
         </li>
         <li class="sidebar-nav-item">
@@ -62,7 +86,7 @@ $finalcode='RS-'.createRandomPassword();
                 <div>
                     <i class="fas fa-file-invoice-dollar"></i>
                 </div>
-                <span>Sales</span>
+                <span>Transaction</span>
             </a>
         </li>
         <li class="sidebar-nav-item">
@@ -108,7 +132,7 @@ $finalcode='RS-'.createRandomPassword();
         <li class="sidebar-nav-item">
             <a href="../templates/branch.php" class="sidebar-nav-link">
                 <div>
-                <i class="fas fa-store"></i>
+                    <i class="fas fa-store"></i>
                 </div>
                 <span>Merchant</span>
             </a>
@@ -116,7 +140,7 @@ $finalcode='RS-'.createRandomPassword();
         <li class="sidebar-nav-item">
             <a href="../templates/uom.php" class="sidebar-nav-link">
                 <div>
-                <i class="fas fa-weight"></i>
+                    <i class="fas fa-weight"></i>
                 </div>
                 <span>Unit of Measurement</span>
             </a>
@@ -151,9 +175,17 @@ $finalcode='RS-'.createRandomPassword();
         <li class="sidebar-nav-item">
             <a href="../templates/report.php?from=0&to=0" class="sidebar-nav-link">
                 <div>
+                    <i class="fas fa-boxes"></i>
+                </div>
+                <span>Inventory Report</span>
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="../templates/transaction.php?id=CASH&invoice=<?php echo $finalcode?>" class="sidebar-nav-link">
+                <div>
                     <i class="fas fa-chart-area"></i>
                 </div>
-                <span>Reports</span>
+                <span>Sales Report</span>
             </a>
         </li>
         <li class="sidebar-nav-item">
@@ -183,7 +215,7 @@ $finalcode='RS-'.createRandomPassword();
         <li class="sidebar-nav-item">
             <a href="../templates/branch.php" class="sidebar-nav-link">
                 <div>
-                <i class="fas fa-store"></i>
+                    <i class="fas fa-store"></i>
                 </div>
                 <span>Merchant</span>
             </a>
@@ -234,7 +266,7 @@ $finalcode='RS-'.createRandomPassword();
         <li class="sidebar-nav-item">
             <a href="../templates/branch.php" class="sidebar-nav-link">
                 <div>
-                <i class="fas fa-store"></i>
+                    <i class="fas fa-store"></i>
                 </div>
                 <span>Merchant</span>
             </a>

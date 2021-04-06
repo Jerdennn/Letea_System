@@ -3,20 +3,24 @@
 <div class="wrapper">
     <div class="row">
         <div class="header">
-            <h3 style="text-transform:uppercase;"></h3>
+            <h3 style="text-transform:uppercase;">
+                &nbsp; &nbsp; &nbsp; Reports &nbsp;
+            </h3>
         </div>
+
     </div>
 
-    <form method="GET" action="report.php" class="row gy-2 gx-3 align-items-center">
+    <form method="GET" action="sales_report.php" class="row gy-2 gx-3 align-items-center">
         <div class="col-auto">
+
         </div>
         <div class="col-auto">
             <h3>Select Merchant</h3>
         </div>
         <div class="col-auto">
-            <select name="merchant" class="form-control">
-                <?php $merchant = $_GET['merchant']?>
+            <select name="merchant" class="form-control" required>
                 <option readonly>SELECT MERCHANT</option>
+                <?php $merchant = $_GET['merchant']?>
                 <?php
           $query = "SELECT * FROM merchant";
           $result = mysqli_query($db,$query) or die(mysqli_error($db));
@@ -26,9 +30,40 @@
             </select>
         </div>
         <div class="col-auto">
+            <h3>From: </h3>
+        </div>
+        <?php 
+         $from_date = $_GET['from'];
+         $to_date = $_GET['to'];
+        if (date($to_date) < date($from_date)){?>
+        <div class=col-auto>
+            <input type=date name=from required style='border: 2px solid red;' class=form-control>
+        </div>
+        <?php } 
+        else { ?>
+        <div class=col-auto>
+            <input type=date name=from required class=form-control>
+        </div>
+        <?php } ?>
+        <div class="col-auto">
+            <h3>To: </h3>
+        </div>
+        <?php 
+        if (date($to_date) < date($from_date)) { ?>
+        <div class=col-auto>
+            <input type=date name=to required style='border: 2px solid red;' class=form-control>
+        </div>
+        <?php }
+       else{ ?>
+        <div class=col-auto>
+            <input type=date name=to required class=form-control>
+        </div>
+        <?php }?>
+        <div class="col-auto">
             <button type="submit" class="btn btn-success"> Search</button>
         </div>
     </form>
+    <br> <br> <br>
     <center>
         <h3><?php echo $merchant?></h3>
         <?php 
@@ -40,56 +75,69 @@
         <h6>Contact #: <?php echo $data1['merchant_phone'];?></h6>
         <?php endforeach; ?>
     </center>
+
     <div class="col-20 col-m-12 col-sm-12">
         <div class="card">
             <div class="card-header">
-
                 <h3 style="text-transform:uppercase;">
                     <?php 
-               echo "Inventory Report for ".$merchant; 
-            ?>
-
+                    if($merchant!= $merchant){
+                        echo "SELECT MERCHANT";
+                    }
+                    else{
+                      echo "Sales Report for ".$merchant; 
+                    }
+                    ?>
                 </h3>
             </div>
-
             <table>
                 <thead>
                     <tr>
+                        <th>Transaction ID</th>
+                        <th>Invoice Number</th>
                         <th>SKU</th>
-                        <th>Name</th>
-                        <th>Qty</th>
+                        <th>Product Name</th>
+                        <th>Customer Name</th>
+                        <th>Quantity</th>
                         <th>Price</th>
-                        <th>Total</th>
-                        <th>Re-order</th>
+                        <th>Transaction Date</th>
+                        <th>Amount Paid</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php 
-                $query2 = "SELECT *,m.merchant_name FROM item i INNER JOIN merchant m ON m.merchant_id = i.merchant_id WHERE m.merchant_name ='$merchant'";
-                $result2 = mysqli_query($db,$query2) or die(mysqli_error($db));
-                $grandtotal = 0;
-                foreach($result2 as $data2):
-                    $total = $data2['qty'] * $data2['price'];
-                    $grandtotal += $total
-                ?>
+                    $from_date = $_GET['from'];
+                    $to_date = $_GET['to'];
+                    $grandtotal=0;
+                    $query2 = "SELECT * FROM transaction t 
+                    INNER JOIN order_item o ON o.order_id = t.order_id
+                    INNER JOIN customer c ON c.customer_id = t.customer_id
+                    WHERE transaction_date BETWEEN '$from_date' AND '$to_date' ORDER by transaction_id ASC"; 
+                    $result2 = mysqli_query($db,$query2) or die (mysqli_error($db));
+                    foreach($result2 as $data2): ?>
                     <tr>
+                        <td>STI-00<?php echo $data2['transaction_id']?></td>
+                        <td><?php echo $data2['invoice']?></td>
                         <td><?php echo $data2['SKU']?></td>
-                        <td><?php echo $data2['item_name']?></td>
+                        <td><?php echo $data2['item_id']?></td>
+                        <td><?php echo $data2['customer_name']?></td>
                         <td><?php echo $data2['qty']?></td>
                         <td><?php echo $data2['price']?></td>
-                        <td><?php echo formatMoney($total,TRUE);?></td>
-                        <td>
-                            <?php 
-                         $qty = $data2['qty']; if($qty <= 20){ ?>
-                            <span style="background:red;color:white;border-radius:20px;font-weight:bold;padding:8px;"><i
-                                    class="fas fa-sync-alt">Reorder</i></span>
-                            <?php }?></td>
-
+                        <td><?php echo $data2['transaction_date']?></td>
+                        <td><?php  
+                        $total = $data2['cash'];
+                        echo $total;   
+                        $grandtotal += $total;
+                        ?></td>
                     </tr>
-                    <?php endforeach;?>
+                        <?php endforeach; ?>
                     <tr>
                         <td colspan="4">TOTAL</td>
-                        <td>₱<?php echo formatMoney($grandtotal,TRUE);?></td>
+                        <td></td>   
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><?php echo formatMoney($grandtotal,true);?></td>
                     </tr>
                     <tr>
                         <th></th>
@@ -122,10 +170,10 @@
                             <button class="btn btn-primary">PRINT</button>
                         </td>
                     </tr>
-                    
                 </tbody>
             </table>
         </div>
     </div>
+</div>
 </div>
 <?php require_once '../require/footer.php'; ?>

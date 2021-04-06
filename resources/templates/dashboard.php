@@ -14,7 +14,7 @@
                         $query = "SELECT COUNT(*) FROM item";
                         $result = mysqli_query($db, $query) or die(mysqli_error($db));
                         while ($row = mysqli_fetch_array($result)) {
-                            echo "$row[0]";
+                            echo $row[0];
                           }
                     ?> Record(s) </p>
 				</div>
@@ -29,7 +29,7 @@
                         $query = "SELECT COUNT(*) FROM merchant";
                         $result = mysqli_query($db, $query) or die(mysqli_error($db));
                         while ($row = mysqli_fetch_array($result)) {
-                            echo "$row[0]";
+                            echo $row[0];
                           }
                     ?> Record(s) </p>
 				</div>
@@ -44,7 +44,7 @@
                         $query = "SELECT COUNT(*) FROM category";
                         $result = mysqli_query($db, $query) or die(mysqli_error($db));
                         while ($row = mysqli_fetch_array($result)) {
-                            echo "$row[0]";
+                            echo $row[0];
                           }
                     ?> Record(s) </p>
 				</div>

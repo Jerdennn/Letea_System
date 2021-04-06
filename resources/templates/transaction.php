@@ -1,21 +1,5 @@
-<?php require_once '../require/navbar.php'; ?>
-<?php require_once '../require/sidebar.php'; 
-
-function formatMoney($number, $fractional=false) {
-    if ($fractional) {
-        $number = sprintf('%.2f', $number);
-    }
-    while (true) {
-        $replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
-        if ($replaced != $number) {
-            $number = $replaced;
-        } else {
-            break;
-        }
-    }
-    return $number;
-}
-?>
+<?php require_once '../require/navbar.php';?>
+<?php require_once '../require/sidebar.php';?>
 <div class="wrapper">
     <div class="row">
         <div class="header">
@@ -130,7 +114,7 @@ function formatMoney($number, $fractional=false) {
           </button>
         </div>
         <div class="modal-body">
-          <form method="post" action="">
+          <form method="POST" action="../libraries/proceedTransaction.php">
           <div class="form-group">
              <input class="form-control" type="hidden" readonly name="date" value="<?php echo date('Y-m-d')?>" required>
            </div>
@@ -147,9 +131,10 @@ function formatMoney($number, $fractional=false) {
            <input class="form-control" type="hidden" readonly name="user" value="<?php echo $_SESSION['name']?>" required>
            </div>
            <div class="form-group">
-              <select name="" id="" class="form-control">
+              <select name="customer" class="form-control">
               <option readonly>Select Customer</option>
-              <?php $query = "SELECT * FROM CUSTOMER";
+              <?php 
+              $query = "SELECT * FROM CUSTOMER";
               $result = mysqli_query($db,$query) or die(mysqli_error($db));
               foreach($result as $data):?>
               <option value="<?php echo $data['customer_id']?>"><?php echo $data['customer_name']?></option>
@@ -162,7 +147,7 @@ function formatMoney($number, $fractional=false) {
           <div class="modal-footer">
           <h6>Le'tea Milktea Hub &copy; 2019</h6>
             <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary" type="submit" name="save_checkout">Save</button>
+            <button class="btn btn-primary" type="submit" name="proceed_transaction">Save</button>
             <button type="reset" class="btn btn-danger"><i class="fa fa-times fa-fw"></i>Reset</button>
          </div>
          </form>  
