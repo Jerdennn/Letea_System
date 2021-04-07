@@ -24,14 +24,14 @@
                     <table>
                         <thead>
                             <tr>
-                                <th style="text-align:left;">ID </th>
-                                <th style="text-align:left;">Employee name</th>
-                                <th style="text-align:left;">Username</th>
-                                <th style="text-align:left;">Email</th>
-                                <th style="text-align:left;">Role</th>
-                                <th style="text-align:left;">Merchant</th>
-                                <th style="text-align:left;">Status</th>
-                                <th style="text-align:left;">Action</th>
+                                <th>ID </th>
+                                <th>Employee name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Merchant</th>
+                                <th>Status</th>
+                                <th style="text-align:center;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,7 +53,7 @@
                           echo "Not Active";
                         endif;
                         ?></td>
-                                <td>
+                                <td style="text-align:center;">
                                     <button data-toggle="modal" data-target="#editUsers<?php echo $data['user_id']?>" type="button" class="btn btn-primary bg-gradient-primary"><i class="fas fa-pen fa-m"> EDIT</i></button>
                                     <button href="admin_category.php?cat_del=<?php echo $data['user_id']?>" class="btn btn-danger"><i class="fas fa-trash fa-m"> DELETE</i></button>
                                 </td> 
@@ -69,7 +69,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form method="post" action="../libraries/addUsers.php">
+          <form method="post" action="../libraries/editUsers.php">
           <div class="form-group">
              <input type="text" class="form-control" placeholder="Username" name="username" value="<?php echo $data['username']?>" required>
            </div>

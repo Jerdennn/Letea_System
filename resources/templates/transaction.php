@@ -12,6 +12,9 @@
     <div class="col-auto">
     </div>
     <div class="col-auto">
+        <h5>Product</h5>
+    </div>
+    <div class="col-auto">
         <select name="item" id="" class="form-control">
         <option readonly>SELECT FLAVOR</option>
         <?php $query = "SELECT * FROM item i INNER JOIN category c ON c.category_id = i.category_id WHERE category_name = 'POWDER' and qty > 15";
@@ -22,7 +25,10 @@
         </select>
     </div>
     <div class="col-auto">
-        <input type="number" class="form-control" value="0" min="0" max="9999999999999999"? name="qty">
+        <h5>Qty</h5>
+    </div>
+    <div class="col-auto">
+        <input type="number" class="form-control" value="0" min="0" max="9999999999999999" name="qty">
     </div>
     <button type="submit" name="transaction_save" class="btn btn-info" style="width: 123px; height:40px; margin-top:8px;"><i class="fas fa-plus"></i> ADD</button>
     <div class="col-auto">

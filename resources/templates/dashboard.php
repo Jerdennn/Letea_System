@@ -90,24 +90,20 @@
 						<i class="fas fa-ellipsis-h"></i>
 					</div>
 					<div class="card-content">
-						<?php $query=mysqli_query($db,"SELECT * FROM item INNER JOIN category ON category.category_ID = item.category_ID ORDER BY item_name LIMIT 5" )or die(mysqli_error($db)); ?>
+						<?php $query=mysqli_query($db,"SELECT * FROM item INNER JOIN category ON category.category_ID = item.category_ID ORDER BY item_name LIMIT 10")or die(mysqli_error($db)); ?>
                     <table>
                         <thead>
                             <tr>
-                                <th>Picture</th>
                                 <th>Product Code</th>
                                 <th>Product Name</th>
-                                <th>Supplier</th>
+                                <th>Category</th>
                                 <th>Qty</th>
                                 <th>Price</th>
-                                <th>Category</th>
-                                
                             </tr>
                         </thead>
                         <tbody>
                             <?php while($row=mysqli_fetch_array($query)){ ?>
                             <tr>
-                                <td><img style="width:80px;height:60px" src=" ../dist/uploads/<?php echo $row['image'];?>"></td>
                                 <td><?php echo $row['SKU'];?></td>
                                 <td><?php echo $row['item_name'];?></td>
                                 <td><?php echo $row['category_name'];?></td>
@@ -161,5 +157,38 @@
 			</div>
 		</div>
 	</div>
+
+
 	<!-- end main content -->
 <?php require_once '../require/footer.php';?>
+<script>
+var ctx = document.getElementById('myChart')
+ctx.height = 500
+ctx.width = 500
+var data = {
+	labels: ['January', 'February', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+	datasets: [{
+		fill: false,
+		label: 'Completed',
+		borderColor: successColor,
+		data: [120, 115, 130, 100, 123, 88, 99, 66, 120, 52, 59],
+		borderWidth: 2,
+		lineTension: 0,
+	}, {
+		fill: false,
+		label: 'Issues',
+		borderColor: dangerColor,
+		data: [66, 44, 12, 48, 99, 56, 78, 23, 100, 22, 47],
+		borderWidth: 2,
+		lineTension: 0,
+	}]
+}
+	var lineChart = new Chart(ctx, {
+	type: 'line',
+	data: data,
+	options: {
+		maintainAspectRatio: false,
+		bezierCurve: false,
+	}
+})
+	</script>
