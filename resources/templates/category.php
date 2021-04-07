@@ -42,14 +42,14 @@
                                 <td><?php echo $data['description']?></td>
                                 <td><?php $status = $data['status'];
                         if ($status == 0):
-                          echo "Available";
-                        else:
                           echo "Unavailable";
+                        else:
+                          echo "Available";
                         endif;
                         ?></td>
                                 <td style="text-align:center;">
                                     <button data-toggle="modal" data-target="#editModal<?php echo $data['category_id']?>" type="button" class="btn btn-primary bg-gradient-primary"><i class="fas fa-pen fa-m"> EDIT</i></button>
-                                    <button href="admin_category.php?cat_del=<?php echo $data['category_id']?>" class="btn btn-danger"><i class="fas fa-trash fa-m"> DELETE</i></button>
+                                    <button data-toggle="modal" data-target="#deleteModal<?php echo $data['category_id']?>" class="btn btn-danger"><i class="fas fa-trash fa-m"> DELETE</i></button>
                                 </td>
 <!-- EDIT MODAL CATEGORY -->
 <div class="modal fade" id="editModal<?php echo $data['category_id']?>" tabindex="-1" role="dialog">
@@ -83,6 +83,34 @@
           <h6>Le'tea Milktea Hub &copy; 2019</h6>
             <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
             <button class="btn btn-primary" type="submit">Update</button>
+         </div>
+         </form>  
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deleteModal<?php echo $data['category_id']?>" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="../libraries/deleteCategory.php">
+          <div class="form-group">
+             <input type="hidden" class="form-control" name="category_id" value="<?php echo $data['category_id']?>" readonly>
+           </div>
+           <div class="form-group">
+             <center><h4>Are you sure you want to delete Category <?php echo $data['category_name']?></h4></center>
+           </div>
+          <div class="modal-footer">
+          <h6>Le'tea Milktea Hub &copy; 2019</h6>
+            <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-danger" type="submit">DELETE</button>
          </div>
          </form>  
         </div>
